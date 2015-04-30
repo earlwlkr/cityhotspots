@@ -15,10 +15,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ListView listview = (ListView) findViewById(R.id.main_menu);
+        final ListView listView = (ListView) findViewById(R.id.main_menu);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.main_menu, android.R.layout.simple_list_item_1);
-        listview.setAdapter(adapter);
+        listView.setAdapter(adapter);
     }
 
 
