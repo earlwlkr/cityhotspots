@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="main_menu">
+        <item>Find cinema</item>
+        <item>Find diner</item>
+        <item>Find mall</item>
+    </array>
+</resources>
