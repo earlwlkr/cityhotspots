@@ -30,3 +30,5 @@ proguard/
 .idea/libraries
 
 Thumbs.db
+
+node_modules/
