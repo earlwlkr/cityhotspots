@@ -31,6 +31,20 @@ app.get('/diners', function(req, res) {
     obj['category'] = parseInt(req.query.category);
   }
   
+  if (req.query.price_min) {
+    obj['price_min'] = {$gte: parseInt(req.query.price_min)};
+  }
+  
+  if (req.query.price_max) {
+    obj['price_max'] = {$lte: parseInt(req.query.price_max)};
+  }
+  
+  if (req.query.time_arrival) {
+    var date = new Date(Date.UTC(1900, 0, 1, req.query.time_arrival));
+    obj['open_time'] = {$lt: date};
+    obj['close_time'] = {$gt: date};
+  }
+  
   
   var options = {
     'limit': 50
@@ -42,7 +56,7 @@ app.get('/diners', function(req, res) {
   });      
 });
 
-var server = app.listen(3000, function() {
+var server = app.listen(8080, function() {
   var host = server.address().address;
   var port = server.address().port;
 
