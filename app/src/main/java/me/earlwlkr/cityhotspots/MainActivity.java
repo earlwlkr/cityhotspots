@@ -4,8 +4,16 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class MainActivity extends Activity {
@@ -15,10 +23,43 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        RestClient restClient = new RestClient();
+        final CityHotSpotsService service = restClient.getApiService();
+
+
         final ListView listView = (ListView) findViewById(R.id.main_menu);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.main_menu, android.R.layout.simple_list_item_1);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                switch (position) {
+                    case 0:
+                        try {
+                            service.getDiners(new Callback<List<Diner>>() {
+                                @Override
+                                public void success(List<Diner> contributors, Response response) {
+                                    // got the list of contributors
+                                }
+
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    // Code for when something went wrong
+                                }
+                            });
+                        } catch (RetrofitError e) {
+                            System.out.println(e.getResponse().getStatus());
+                        }
+                        break;
+                }
+            }
+        });
+
+
+
+
     }
 
 
