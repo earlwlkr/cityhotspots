@@ -13,4 +13,7 @@ import retrofit.http.Query;
 public interface  CityHotSpotsService {
     @GET("/diners")
     void getDiners(Callback<List<Diner>> diners);
+
+    @GET("/dineroptions")
+    void getDinerOptions(Callback<List<DinerOptions>> diners);
 }
