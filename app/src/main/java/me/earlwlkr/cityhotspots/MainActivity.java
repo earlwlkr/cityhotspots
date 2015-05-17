@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.dd.CircularProgressButton;
+
 import java.util.List;
 
 import retrofit.Callback;
@@ -44,6 +46,26 @@ public class MainActivity extends Activity {
                                     // got the list of contributors
                                     setContentView(R.layout.layout_diner_options);
                                     fetchOptions(options);
+                                    final CircularProgressButton btnSearch = (CircularProgressButton) findViewById(R.id.btn_search);
+                                    btnSearch.setIndeterminateProgressMode(true);
+                                    btnSearch.setOnClickListener(new Button.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            btnSearch.setProgress(50);
+                                            service.getDiners(new Callback<List<Diner>>() {
+                                                @Override
+                                                public void success(List<Diner> diners, Response response) {
+                                                    btnSearch.setProgress(100);
+                                                    System.out.println(diners.get(0).address.district);
+                                                }
+
+                                                @Override
+                                                public void failure(RetrofitError error) {
+
+                                                }
+                                            });
+                                        }
+                                    });
                                 }
 
                                 @Override
