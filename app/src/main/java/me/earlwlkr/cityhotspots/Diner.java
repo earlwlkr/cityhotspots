@@ -1,7 +1,5 @@
 package me.earlwlkr.cityhotspots;
 
-import android.location.Address;
-
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
@@ -14,18 +12,62 @@ import java.util.Date;
 @Parcel
 public class Diner {
     @SerializedName("foody_id")
-    int foodyId;
-    String name;
+    private int foodyId;
+
+    private String name;
+
     @SerializedName("phone")
-    String phoneNumber;
-    String cuisine;
+    private String phoneNumber;
+
+    private String cuisine;
+
     @SerializedName("price_min")
-    int priceMin;
+    private int priceMin;
+
     @SerializedName("price_max")
-    int priceMax;
+    private int priceMax;
+
     @SerializedName("open_time")
-    Date openTime;
+    private Date openTime;
+
     @SerializedName("close_time")
-    Date closeTime;
-    Address address;
+    private Date closeTime;
+
+    private Address address;
+
+    public int getFoodyId() {
+        return foodyId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCuisine() {
+        return cuisine;
+    }
+
+    public int getPriceMin() {
+        return priceMin;
+    }
+
+    public int getPriceMax() {
+        return priceMax;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public Date getCloseTime() {
+        return closeTime;
+    }
+
+    public Date getOpenTime() {
+        return openTime;
+    }
 }
