@@ -7,4 +7,6 @@
     <string name="option_diner_cuisine">Nền ẩm thực:</string>
     <string name="option_diner_category">Danh mục:</string>
     <string name="option_diner_district">Khu vực:</string>
+
+    <string name="search">Tìm</string>
 </resources>
