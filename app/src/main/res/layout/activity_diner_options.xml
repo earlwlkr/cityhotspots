@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".DinerOptionsActivity"
+    style="@style/StyleLayout">
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        card_view:cardCornerRadius="4dp"
+        style="@style/StyleCardView"
+        android:id="@+id/card_view">
+
+        <RelativeLayout
+            xmlns:tools="http://schemas.android.com/tools"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            tools:context=".MainActivity"
+            style="@style/StyleLayout"
+            >
+
+            <TextView
+                android:id="@+id/txt_option_diner_cuisine"
+                android:text="@string/option_diner_cuisine"
+                style="@style/OptionName"
+                />
+
+            <Spinner
+                android:id="@+id/spinner_option_diner_cuisine"
+                android:layout_alignBaseline="@id/txt_option_diner_cuisine"
+                android:layout_toEndOf="@id/txt_option_diner_cuisine"
+                android:layout_toRightOf="@id/txt_option_diner_cuisine"
+                style="@style/OptionValue"
+                />
+
+            <TextView
+                android:id="@+id/txt_option_diner_category"
+                android:layout_below="@id/txt_option_diner_cuisine"
+                android:text="@string/option_diner_category"
+                style="@style/OptionName"
+                />
+
+            <Spinner
+                android:id="@+id/spinner_option_diner_category"
+                android:layout_alignBaseline="@id/txt_option_diner_category"
+                android:layout_toEndOf="@id/txt_option_diner_category"
+                android:layout_toRightOf="@id/txt_option_diner_category"
+                style="@style/OptionValue"
+                />
+
+            <TextView
+                android:id="@+id/txt_option_diner_district"
+                android:layout_below="@id/txt_option_diner_category"
+                android:text="@string/option_diner_district"
+                style="@style/OptionName"
+                />
+
+            <Spinner
+                android:id="@+id/spinner_option_diner_district"
+                android:layout_alignBaseline="@id/txt_option_diner_district"
+                android:layout_toEndOf="@id/txt_option_diner_district"
+                android:layout_toRightOf="@id/txt_option_diner_district"
+                style="@style/OptionValue"
+                />
+
+            <TextView
+                android:id="@+id/txt_option_diner_price_range"
+                android:layout_below="@id/txt_option_diner_district"
+                android:text="@string/option_diner_price_range"
+                style="@style/OptionName"
+                />
+
+            <me.earlwlkr.cityhotspots.RangeSeekBar
+                android:id="@+id/price_range"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_option_diner_price_range"
+                />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <com.dd.CircularProgressButton
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/btn_search"
+        android:layout_width="196dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/card_view"
+        android:layout_centerInParent="true"
+        android:text="@string/search"
+        app:cpb_textComplete="@string/complete"
+        app:cpb_textError="@string/error"
+        app:cpb_textIdle="@string/search"
+        />
+
+</RelativeLayout>
