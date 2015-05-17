@@ -62,12 +62,28 @@ public class MainActivity extends Activity {
                                         @Override
                                         public void onClick(View v) {
                                             btnSearch.setProgress(50);
-                                            String cuisine = ((Spinner) findViewById(R.id.spinner_option_diner_cuisine))
-                                                    .getSelectedItem().toString();
-                                            String category = ((Spinner) findViewById(R.id.spinner_option_diner_category))
-                                                    .getSelectedItem().toString();
-                                            String district = ((Spinner) findViewById(R.id.spinner_option_diner_district))
-                                                    .getSelectedItem().toString();
+                                            String cuisine = null,
+                                                    category = null,
+                                                    district = null;
+                                            int pos;
+                                            Spinner spinner = (Spinner) findViewById(R.id.spinner_option_diner_cuisine);
+                                            pos = spinner.getSelectedItemPosition();
+                                            if (pos != 0) {
+                                                cuisine = spinner.getSelectedItem().toString();
+                                            }
+
+                                            spinner = (Spinner) findViewById(R.id.spinner_option_diner_category);
+                                            pos = spinner.getSelectedItemPosition();
+                                            if (pos != 0) {
+                                                category = spinner.getSelectedItem().toString();
+                                            }
+
+                                            spinner = (Spinner) findViewById(R.id.spinner_option_diner_district);
+                                            pos = spinner.getSelectedItemPosition();
+                                            if (pos != 0) {
+                                                district = spinner.getSelectedItem().toString();
+                                            }
+
 
                                             String price_min = price_range.getSelectedMinValue().toString();
                                             String price_max = price_range.getSelectedMaxValue().toString();
@@ -84,7 +100,6 @@ public class MainActivity extends Activity {
 
                                                 @Override
                                                 public void failure(RetrofitError error) {
-
                                                     btnSearch.setProgress(-1);
                                                 }
                                             });
