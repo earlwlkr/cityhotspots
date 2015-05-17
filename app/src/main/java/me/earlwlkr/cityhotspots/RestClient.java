@@ -11,10 +11,12 @@ import retrofit.converter.GsonConverter;
  */
 public class RestClient
 {
+    private static RestClient mInstance = null;
+
     private static final String BASE_URL = "http://cityhotspots-46171.onmodulus.net";
     private CityHotSpotsService apiService;
 
-    public RestClient()
+    protected RestClient()
     {
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'")
@@ -27,6 +29,13 @@ public class RestClient
                 .build();
 
         apiService = restAdapter.create(CityHotSpotsService.class);
+    }
+
+    public static synchronized RestClient getInstance(){
+        if(null == mInstance){
+            mInstance = new RestClient();
+        }
+        return mInstance;
     }
 
     public CityHotSpotsService getApiService()

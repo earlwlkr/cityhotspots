@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RestClient restClient = new RestClient();
+        final RestClient restClient = RestClient.getInstance();
         final CityHotSpotsService service = restClient.getApiService();
 
         final ListView listView = (ListView) findViewById(R.id.main_menu);
