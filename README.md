@@ -1,4 +1,4 @@
-# City Hot Spots #
+# ![City Hot Spots](app/src/main/res/mipmap-xhdpi/ic_launcher.png) City Hot Spots #
 
 Suggest places of interest in city.
 
