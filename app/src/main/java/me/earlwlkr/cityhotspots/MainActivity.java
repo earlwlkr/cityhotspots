@@ -120,8 +120,6 @@ public class MainActivity extends Activity {
         setSpinnerData(R.id.spinner_option_diner_cuisine, options.getCuisines());
         setSpinnerData(R.id.spinner_option_diner_category, options.getCategories());
         setSpinnerData(R.id.spinner_option_diner_district, options.getDistricts());
-
-        InputFilter filter = new InputFilterMinMax(options.getPriceMin(), options.getPriceMax());
     }
 
 
