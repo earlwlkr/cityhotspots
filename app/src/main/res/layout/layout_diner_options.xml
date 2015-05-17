@@ -63,35 +63,17 @@
                 />
 
             <TextView
-                android:id="@+id/txt_option_diner_price_min"
+                android:id="@+id/txt_option_diner_price_range"
                 android:layout_below="@id/txt_option_diner_district"
-                android:text="@string/option_diner_price_min"
+                android:text="@string/option_diner_price_range"
                 style="@style/OptionName"
                 />
 
-            <EditText
-                android:id="@+id/edittext_price_min"
-                android:inputType="number"
-                android:layout_alignBaseline="@id/txt_option_diner_price_min"
-                android:layout_toEndOf="@id/txt_option_diner_price_min"
-                android:layout_toRightOf="@id/txt_option_diner_price_min"
-                style="@style/OptionValue"
-                />
-
-            <TextView
-                android:id="@+id/txt_option_diner_price_max"
-                android:layout_below="@id/txt_option_diner_price_min"
-                android:text="@string/option_diner_price_max"
-                style="@style/OptionName"
-                />
-
-            <EditText
-                android:id="@+id/edittext_price_max"
-                android:inputType="number"
-                android:layout_alignBaseline="@id/txt_option_diner_price_max"
-                android:layout_toEndOf="@id/txt_option_diner_price_max"
-                android:layout_toRightOf="@id/txt_option_diner_price_max"
-                style="@style/OptionValue"
+            <me.earlwlkr.cityhotspots.RangeSeekBar
+                android:id="@+id/price_range"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_option_diner_price_range"
                 />
 
         </RelativeLayout>
