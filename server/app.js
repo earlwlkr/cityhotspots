@@ -8,18 +8,9 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
   // GET: /dineroptions
   app.get('/dineroptions', function(req, res) {
-    var collection = db.collection('diners');
-    var ret = {};
-
-    collection.distinct('cuisine', function(err, result) {
-      ret['cuisines'] = result;
-      collection.distinct('address.district', function(err, result) {
-        ret['districts'] = result;
-        collection.distinct('category', function(err, result) {
-          ret['categories'] = result;
-          res.send(ret);
-        });
-      });
+    var collection = db.collection('dineroptions');
+    collection.findOne(function(err, docs) {
+      res.json(docs);
     });
   });
 
