@@ -15,5 +15,5 @@ public interface  CityHotSpotsService {
     void getDiners(Callback<List<Diner>> diners);
 
     @GET("/dineroptions")
-    void getDinerOptions(Callback<List<DinerOptions>> diners);
+    void getDinerOptions(Callback<DinerOptions> diners);
 }

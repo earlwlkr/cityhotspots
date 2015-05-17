@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import java.util.List;
 
@@ -26,7 +27,6 @@ public class MainActivity extends Activity {
         RestClient restClient = new RestClient();
         final CityHotSpotsService service = restClient.getApiService();
 
-
         final ListView listView = (ListView) findViewById(R.id.main_menu);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.main_menu, android.R.layout.simple_list_item_1);
@@ -36,12 +36,21 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
                 switch (position) {
-                    case 0:
+                    case 1:
                         try {
-                            service.getDiners(new Callback<List<Diner>>() {
+                            service.getDinerOptions(new Callback<DinerOptions>() {
                                 @Override
-                                public void success(List<Diner> contributors, Response response) {
+                                public void success(DinerOptions options, Response response) {
                                     // got the list of contributors
+                                    setContentView(R.layout.layout_diner_options);
+                                    Spinner spinner = (Spinner) findViewById(R.id.spinner);
+                                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
+                                            getApplicationContext(),
+                                            R.layout.spinner_item,
+                                            options.getCuisines());
+                                    dataAdapter.setDropDownViewResource(
+                                            R.layout.spinner_dropdown_item);
+                                    spinner.setAdapter(dataAdapter);
                                 }
 
                                 @Override
@@ -56,10 +65,6 @@ public class MainActivity extends Activity {
                 }
             }
         });
-
-
-
-
     }
 
 
