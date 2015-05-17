@@ -43,14 +43,7 @@ public class MainActivity extends Activity {
                                 public void success(DinerOptions options, Response response) {
                                     // got the list of contributors
                                     setContentView(R.layout.layout_diner_options);
-                                    Spinner spinner = (Spinner) findViewById(R.id.spinner);
-                                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
-                                            getApplicationContext(),
-                                            R.layout.spinner_item,
-                                            options.getCuisines());
-                                    dataAdapter.setDropDownViewResource(
-                                            R.layout.spinner_dropdown_item);
-                                    spinner.setAdapter(dataAdapter);
+                                    fetchOptions(options);
                                 }
 
                                 @Override
@@ -65,6 +58,35 @@ public class MainActivity extends Activity {
                 }
             }
         });
+    }
+
+    private void fetchOptions(DinerOptions options) {
+        Spinner spinner = (Spinner) findViewById(R.id.spinner_option_diner_cuisine);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
+                getApplicationContext(),
+                R.layout.spinner_item,
+                options.getCuisines());
+        dataAdapter.setDropDownViewResource(
+                R.layout.spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+
+        spinner = (Spinner) findViewById(R.id.spinner_option_diner_category);
+        dataAdapter = new ArrayAdapter<String>(
+                getApplicationContext(),
+                R.layout.spinner_item,
+                options.getCategories());
+        dataAdapter.setDropDownViewResource(
+                R.layout.spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+
+        spinner = (Spinner) findViewById(R.id.spinner_option_diner_district);
+        dataAdapter = new ArrayAdapter<String>(
+                getApplicationContext(),
+                R.layout.spinner_item,
+                options.getDistricts());
+        dataAdapter.setDropDownViewResource(
+                R.layout.spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
     }
 
 
