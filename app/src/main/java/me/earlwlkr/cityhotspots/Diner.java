@@ -2,14 +2,11 @@ package me.earlwlkr.cityhotspots;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.parceler.Parcel;
-
 import java.util.Date;
 
 /**
  * Created by earl on 5/14/2015.
  */
-@Parcel
 public class Diner {
     @SerializedName("foody_id")
     private int foodyId;

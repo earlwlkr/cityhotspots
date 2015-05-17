@@ -2,12 +2,9 @@ package me.earlwlkr.cityhotspots;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.parceler.Parcel;
-
 /**
  * Created by earl on 5/17/2015.
  */
-@Parcel
 public class Address {
     @SerializedName("street_address")
     private String streetAddress;

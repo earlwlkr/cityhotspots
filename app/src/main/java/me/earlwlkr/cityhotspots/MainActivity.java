@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
                                     fetchOptions(options);
                                     final CircularProgressButton btnSearch = (CircularProgressButton) findViewById(R.id.btn_search);
                                     btnSearch.setIndeterminateProgressMode(true);
-                                    btnSearch.setOnClickListener(new Button.OnClickListener() {
+                                    btnSearch.setOnClickListener(new CircularProgressButton.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             btnSearch.setProgress(50);
@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
                                                 @Override
                                                 public void success(List<Diner> diners, Response response) {
                                                     btnSearch.setProgress(100);
-                                                    System.out.println(diners.get(0).address.district);
+                                                    System.out.println(diners.get(0).getAddress().getStreetAddress());
                                                 }
 
                                                 @Override

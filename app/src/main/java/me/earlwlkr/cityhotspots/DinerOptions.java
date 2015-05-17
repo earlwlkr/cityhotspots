@@ -1,7 +1,5 @@
 package me.earlwlkr.cityhotspots;
 
-import org.parceler.Parcel;
-
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -9,7 +7,6 @@ import java.util.List;
 /**
  * Created by earl on 5/16/2015.
  */
-@Parcel
 public class DinerOptions {
     @SerializedName("cuisines")
     private List<String> cuisines;
