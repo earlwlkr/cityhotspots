@@ -33,6 +33,9 @@
         <activity
             android:name=".DinerOptionsActivity"
             android:label="@string/title_activity_diner_options" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
     </application>
 

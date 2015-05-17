@@ -2,6 +2,7 @@ package me.earlwlkr.cityhotspots;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,6 +55,8 @@ public class DinerOptionsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diner_options);
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
         spinnerCuisine = (Spinner) findViewById(R.id.spinner_option_diner_cuisine);
         spinnerCategory = (Spinner) findViewById(R.id.spinner_option_diner_category);
         spinnerDistrict = (Spinner) findViewById(R.id.spinner_option_diner_district);
@@ -73,9 +76,9 @@ public class DinerOptionsActivity extends Activity {
             public void onClick(View v) {
                 btnSearch.setProgress(50);
                 String
-                        cuisine = spinnerCuisine.getSelectedItem().toString(),
-                        category = spinnerCategory.getSelectedItem().toString(),
-                        district = spinnerDistrict.getSelectedItem().toString();
+                    cuisine = spinnerCuisine.getSelectedItem().toString(),
+                    category = spinnerCategory.getSelectedItem().toString(),
+                    district = spinnerDistrict.getSelectedItem().toString();
 
                 if (cuisine.equals("Tất cả")) {
                     cuisine = null;
@@ -123,13 +126,12 @@ public class DinerOptionsActivity extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }
