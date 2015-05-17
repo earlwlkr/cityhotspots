@@ -21,8 +21,12 @@ import retrofit.client.Response;
 
 public class DinerOptionsActivity extends Activity {
 
-    private void setSpinnerData(int spinnerId, List<String> data) {
-        Spinner spinner = (Spinner) findViewById(spinnerId);
+    private Spinner spinnerCuisine;
+    private Spinner spinnerCategory;
+    private Spinner spinnerDistrict;
+    private RangeSeekBar<Integer> priceRange;
+
+    private void setSpinnerData(Spinner spinner, List<String> data) {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
                 getApplicationContext(),
                 R.layout.spinner_item,
@@ -32,10 +36,17 @@ public class DinerOptionsActivity extends Activity {
         spinner.setAdapter(dataAdapter);
     }
 
+    private void setPriceRangeSliderData(int min, int max) {
+        priceRange.setRangeValues(min, max);
+        priceRange.setSelectedMinValue(min);
+        priceRange.setSelectedMaxValue(max);
+    }
+
     private void fetchOptions(DinerOptions options) {
-        setSpinnerData(R.id.spinner_option_diner_cuisine, options.getCuisines());
-        setSpinnerData(R.id.spinner_option_diner_category, options.getCategories());
-        setSpinnerData(R.id.spinner_option_diner_district, options.getDistricts());
+        setSpinnerData(spinnerCuisine, options.getCuisines());
+        setSpinnerData(spinnerCategory, options.getCategories());
+        setSpinnerData(spinnerDistrict, options.getDistricts());
+        setPriceRangeSliderData(options.getPriceMin(), options.getPriceMax());
     }
 
     @Override
@@ -43,18 +54,17 @@ public class DinerOptionsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diner_options);
 
+        spinnerCuisine = (Spinner) findViewById(R.id.spinner_option_diner_cuisine);
+        spinnerCategory = (Spinner) findViewById(R.id.spinner_option_diner_category);
+        spinnerDistrict = (Spinner) findViewById(R.id.spinner_option_diner_district);
+        priceRange = (RangeSeekBar<Integer>) findViewById(R.id.price_range);
+
         Bundle bundle = this.getIntent().getExtras();
         RestClient restClient = RestClient.getInstance();
         final CityHotSpotsService service = restClient.getApiService();
 
         DinerOptions options = Parcels.unwrap(bundle.getParcelable("options"));
         fetchOptions(options);
-
-        int min = options.getPriceMin(), max = options.getPriceMax();
-        final RangeSeekBar<Integer> price_range = (RangeSeekBar<Integer>) findViewById(R.id.price_range);
-        price_range.setRangeValues(min, max);
-        price_range.setSelectedMinValue(min);
-        price_range.setSelectedMaxValue(max);
 
         final CircularProgressButton btnSearch = (CircularProgressButton) findViewById(R.id.btn_search);
         btnSearch.setIndeterminateProgressMode(true);
@@ -66,27 +76,23 @@ public class DinerOptionsActivity extends Activity {
                         category = null,
                         district = null;
                 int pos;
-                Spinner spinner = (Spinner) findViewById(R.id.spinner_option_diner_cuisine);
-                pos = spinner.getSelectedItemPosition();
+                pos = spinnerCuisine.getSelectedItemPosition();
                 if (pos != 0) {
-                    cuisine = spinner.getSelectedItem().toString();
+                    cuisine = spinnerCuisine.getSelectedItem().toString();
                 }
 
-                spinner = (Spinner) findViewById(R.id.spinner_option_diner_category);
-                pos = spinner.getSelectedItemPosition();
+                pos = spinnerCategory.getSelectedItemPosition();
                 if (pos != 0) {
-                    category = spinner.getSelectedItem().toString();
+                    category = spinnerCategory.getSelectedItem().toString();
                 }
 
-                spinner = (Spinner) findViewById(R.id.spinner_option_diner_district);
-                pos = spinner.getSelectedItemPosition();
+                pos = spinnerDistrict.getSelectedItemPosition();
                 if (pos != 0) {
-                    district = spinner.getSelectedItem().toString();
+                    district = spinnerDistrict.getSelectedItem().toString();
                 }
 
-
-                String price_min = price_range.getSelectedMinValue().toString();
-                String price_max = price_range.getSelectedMaxValue().toString();
+                String price_min = priceRange.getSelectedMinValue().toString();
+                String price_max = priceRange.getSelectedMaxValue().toString();
 
                 service.getDiners(cuisine, district, category,
                         price_min, price_max,
