@@ -12,7 +12,13 @@ import retrofit.http.Query;
  */
 public interface  CityHotSpotsService {
     @GET("/diners")
-    void getDiners(Callback<List<Diner>> diners);
+    void getDiners(@Query("cuisine") String cuisine,
+                   @Query("district") String district,
+                   @Query("category") String category,
+                   @Query("price_min") String price_min,
+                   @Query("price_max") String price_max,
+                   @Query("time_arrival") String timeOfArrival,
+                   Callback<List<Diner>> diners);
 
     @GET("/dineroptions")
     void getDinerOptions(Callback<DinerOptions> diners);
