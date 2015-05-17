@@ -46,17 +46,26 @@ public class MainActivity extends Activity {
                                     // got the list of contributors
                                     setContentView(R.layout.layout_diner_options);
                                     fetchOptions(options);
+
                                     final CircularProgressButton btnSearch = (CircularProgressButton) findViewById(R.id.btn_search);
                                     btnSearch.setIndeterminateProgressMode(true);
                                     btnSearch.setOnClickListener(new CircularProgressButton.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             btnSearch.setProgress(50);
-                                            service.getDiners(new Callback<List<Diner>>() {
+                                            String cuisine = ((Spinner) findViewById(R.id.spinner_option_diner_cuisine))
+                                                    .getSelectedItem().toString();
+                                            String category = ((Spinner) findViewById(R.id.spinner_option_diner_category))
+                                                    .getSelectedItem().toString();
+                                            String district = ((Spinner) findViewById(R.id.spinner_option_diner_district))
+                                                    .getSelectedItem().toString();
+
+                                            service.getDiners(cuisine, district, category, "0", "2000000", "6",
+                                                    new Callback<List<Diner>>() {
                                                 @Override
                                                 public void success(List<Diner> diners, Response response) {
                                                     btnSearch.setProgress(100);
-                                                    System.out.println(diners.get(0).getAddress().getStreetAddress());
+                                                    System.out.println(diners.size());
                                                 }
 
                                                 @Override
