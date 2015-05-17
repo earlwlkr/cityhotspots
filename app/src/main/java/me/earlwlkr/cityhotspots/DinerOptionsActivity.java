@@ -72,23 +72,21 @@ public class DinerOptionsActivity extends Activity {
             @Override
             public void onClick(View v) {
                 btnSearch.setProgress(50);
-                String cuisine = null,
-                        category = null,
-                        district = null;
-                int pos;
-                pos = spinnerCuisine.getSelectedItemPosition();
-                if (pos != 0) {
-                    cuisine = spinnerCuisine.getSelectedItem().toString();
+                String
+                        cuisine = spinnerCuisine.getSelectedItem().toString(),
+                        category = spinnerCategory.getSelectedItem().toString(),
+                        district = spinnerDistrict.getSelectedItem().toString();
+
+                if (cuisine.equals("Tất cả")) {
+                    cuisine = null;
                 }
 
-                pos = spinnerCategory.getSelectedItemPosition();
-                if (pos != 0) {
-                    category = spinnerCategory.getSelectedItem().toString();
+                if (category.equals("Tất cả")) {
+                    category = null;
                 }
 
-                pos = spinnerDistrict.getSelectedItemPosition();
-                if (pos != 0) {
-                    district = spinnerDistrict.getSelectedItem().toString();
+                if (district.equals("Tất cả")) {
+                    district = null;
                 }
 
                 String price_min = priceRange.getSelectedMinValue().toString();
