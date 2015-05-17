@@ -10,6 +10,8 @@
     <string name="option_diner_price_range">Khoảng giá:</string>
 
     <string name="search">Tìm</string>
+    <string name="error">Lỗi</string>
+    <string name="complete">Hoàn thành</string>
 
     <string name="demo_min_label">Min</string>
     <string name="demo_max_label">Max</string>
