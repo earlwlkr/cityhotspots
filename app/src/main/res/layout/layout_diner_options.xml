@@ -27,13 +27,10 @@
 
             <Spinner
                 android:id="@+id/spinner_option_diner_cuisine"
-                android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
                 android:layout_alignBaseline="@id/txt_option_diner_cuisine"
                 android:layout_toEndOf="@id/txt_option_diner_cuisine"
                 android:layout_toRightOf="@id/txt_option_diner_cuisine"
+                style="@style/OptionValue"
                 />
 
             <TextView
@@ -45,13 +42,10 @@
 
             <Spinner
                 android:id="@+id/spinner_option_diner_category"
-                android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
                 android:layout_alignBaseline="@id/txt_option_diner_category"
                 android:layout_toEndOf="@id/txt_option_diner_category"
                 android:layout_toRightOf="@id/txt_option_diner_category"
+                style="@style/OptionValue"
                 />
 
             <TextView
@@ -63,13 +57,10 @@
 
             <Spinner
                 android:id="@+id/spinner_option_diner_district"
-                android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
                 android:layout_alignBaseline="@id/txt_option_diner_district"
                 android:layout_toEndOf="@id/txt_option_diner_district"
                 android:layout_toRightOf="@id/txt_option_diner_district"
+                style="@style/OptionValue"
                 />
 
         </RelativeLayout>
