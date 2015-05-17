@@ -85,6 +85,7 @@ public class MainActivity extends Activity {
                                                 @Override
                                                 public void failure(RetrofitError error) {
 
+                                                    btnSearch.setProgress(-1);
                                                 }
                                             });
                                         }
