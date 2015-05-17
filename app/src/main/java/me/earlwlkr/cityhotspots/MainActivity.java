@@ -1,6 +1,7 @@
 package me.earlwlkr.cityhotspots;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.Menu;
@@ -8,13 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 
-import com.dd.CircularProgressButton;
-
-import java.util.List;
+import org.parceler.Parcels;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -46,65 +43,11 @@ public class MainActivity extends Activity {
                                 @Override
                                 public void success(DinerOptions options, Response response) {
                                     // got the list of contributors
-                                    setContentView(R.layout.layout_diner_options);
-                                    fetchOptions(options);
-
-                                    int min = options.getPriceMin(), max = options.getPriceMax();
-                                    final RangeSeekBar<Integer> price_range = (RangeSeekBar<Integer>) findViewById(R.id.price_range);
-                                    price_range.setRangeValues(min, max);
-                                    price_range.setSelectedMinValue(min);
-                                    price_range.setSelectedMaxValue(max);
-
-                                    final CircularProgressButton btnSearch = (CircularProgressButton) findViewById(R.id.btn_search);
-                                    btnSearch.setIndeterminateProgressMode(true);
-
-                                    btnSearch.setOnClickListener(new CircularProgressButton.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            btnSearch.setProgress(50);
-                                            String cuisine = null,
-                                                    category = null,
-                                                    district = null;
-                                            int pos;
-                                            Spinner spinner = (Spinner) findViewById(R.id.spinner_option_diner_cuisine);
-                                            pos = spinner.getSelectedItemPosition();
-                                            if (pos != 0) {
-                                                cuisine = spinner.getSelectedItem().toString();
-                                            }
-
-                                            spinner = (Spinner) findViewById(R.id.spinner_option_diner_category);
-                                            pos = spinner.getSelectedItemPosition();
-                                            if (pos != 0) {
-                                                category = spinner.getSelectedItem().toString();
-                                            }
-
-                                            spinner = (Spinner) findViewById(R.id.spinner_option_diner_district);
-                                            pos = spinner.getSelectedItemPosition();
-                                            if (pos != 0) {
-                                                district = spinner.getSelectedItem().toString();
-                                            }
-
-
-                                            String price_min = price_range.getSelectedMinValue().toString();
-                                            String price_max = price_range.getSelectedMaxValue().toString();
-
-                                            service.getDiners(cuisine, district, category,
-                                                    price_min, price_max,
-                                                    "6",
-                                                    new Callback<List<Diner>>() {
-                                                @Override
-                                                public void success(List<Diner> diners, Response response) {
-                                                    btnSearch.setProgress(100);
-                                                    System.out.println(diners.size());
-                                                }
-
-                                                @Override
-                                                public void failure(RetrofitError error) {
-                                                    btnSearch.setProgress(-1);
-                                                }
-                                            });
-                                        }
-                                    });
+                                    Intent i = new Intent(getApplicationContext(), DinerOptionsActivity.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putParcelable("options", Parcels.wrap(options));
+                                    i.putExtras(bundle);
+                                    startActivity(i);
                                 }
 
                                 @Override
@@ -119,23 +62,6 @@ public class MainActivity extends Activity {
                 }
             }
         });
-    }
-
-    private void setSpinnerData(int spinnerId, List<String> data) {
-        Spinner spinner = (Spinner) findViewById(spinnerId);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
-                getApplicationContext(),
-                R.layout.spinner_item,
-                data);
-        dataAdapter.setDropDownViewResource(
-                R.layout.spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-    }
-
-    private void fetchOptions(DinerOptions options) {
-        setSpinnerData(R.id.spinner_option_diner_cuisine, options.getCuisines());
-        setSpinnerData(R.id.spinner_option_diner_category, options.getCategories());
-        setSpinnerData(R.id.spinner_option_diner_district, options.getDistricts());
     }
 
 
