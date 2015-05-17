@@ -25,4 +25,11 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="OptionName">
+        <item name="android:layout_width">150dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_alignParentStart" tools:targetApi="17" >true</item>
+    </style>
+
 </resources>
