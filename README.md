@@ -24,6 +24,10 @@ Before you push to the remote repository, make sure you don't commit changes to 
 git update-index --assume-unchanged app\src\main\res\values\apikeys.xml
 ```
 
+Follow this list of Android development's best practices:
+
+https://github.com/futurice/android-best-practices
+
 ## License
 
 MIT License
