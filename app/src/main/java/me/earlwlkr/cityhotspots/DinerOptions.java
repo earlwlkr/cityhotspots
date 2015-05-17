@@ -17,7 +17,15 @@ public class DinerOptions {
     @SerializedName("categories")
     private List<String> categories;
 
+    @SerializedName("price_min")
+    private int priceMin;
+
+    @SerializedName("price_max")
+    private int priceMax;
+
     public List<String> getCuisines() { return cuisines; }
     public List<String> getDistricts() { return districts; }
     public List<String> getCategories() { return categories; }
+    public int getPriceMin() { return priceMin; }
+    public int getPriceMax() { return priceMax; }
 }
