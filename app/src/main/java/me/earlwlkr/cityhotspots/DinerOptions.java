@@ -2,11 +2,14 @@ package me.earlwlkr.cityhotspots;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import java.util.List;
 
 /**
  * Created by earl on 5/16/2015.
  */
+@Parcel
 public class DinerOptions {
     @SerializedName("cuisines")
     private List<String> cuisines;
@@ -28,4 +31,24 @@ public class DinerOptions {
     public List<String> getCategories() { return categories; }
     public int getPriceMin() { return priceMin; }
     public int getPriceMax() { return priceMax; }
+
+    public void setCuisines(List<String> cuisines) {
+        this.cuisines = cuisines;
+    }
+
+    public void setDistricts(List<String> districts) {
+        this.districts = districts;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
+    public void setPriceMin(int priceMin) {
+        this.priceMin = priceMin;
+    }
+
+    public void setPriceMax(int priceMax) {
+        this.priceMax = priceMax;
+    }
 }

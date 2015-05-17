@@ -10,7 +10,7 @@ import retrofit.http.Query;
 /**
  * Created by earl on 5/14/2015.
  */
-public interface  CityHotSpotsService {
+public interface CityHotSpotsService {
     @GET("/diners")
     void getDiners(@Query("cuisine") String cuisine,
                    @Query("district") String district,

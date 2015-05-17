@@ -2,11 +2,14 @@ package me.earlwlkr.cityhotspots;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import java.util.Date;
 
 /**
  * Created by earl on 5/14/2015.
  */
+@Parcel
 public class Diner {
     @SerializedName("foody_id")
     private int foodyId;
@@ -36,35 +39,71 @@ public class Diner {
         return foodyId;
     }
 
+    public void setFoodyId(int foodyId) {
+        this.foodyId = foodyId;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCuisine() {
         return cuisine;
     }
 
+    public void setCuisine(String cuisine) {
+        this.cuisine = cuisine;
+    }
+
     public int getPriceMin() {
         return priceMin;
+    }
+
+    public void setPriceMin(int priceMin) {
+        this.priceMin = priceMin;
     }
 
     public int getPriceMax() {
         return priceMax;
     }
 
+    public void setPriceMax(int priceMax) {
+        this.priceMax = priceMax;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Address getAddress() {
         return address;
     }
 
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     public Date getCloseTime() {
         return closeTime;
     }
 
+    public void setCloseTime(Date closeTime) {
+        this.closeTime = closeTime;
+    }
+
     public Date getOpenTime() {
         return openTime;
+    }
+
+    public void setOpenTime(Date openTime) {
+        this.openTime = openTime;
     }
 }
