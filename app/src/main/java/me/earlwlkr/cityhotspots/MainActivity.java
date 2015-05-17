@@ -2,11 +2,13 @@ package me.earlwlkr.cityhotspots;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -47,6 +49,14 @@ public class MainActivity extends Activity {
                                     setContentView(R.layout.layout_diner_options);
                                     fetchOptions(options);
 
+                                    InputFilter filter = new InputFilterMinMax(options.getPriceMin(), options.getPriceMax());
+
+                                    EditText input_price_min = (EditText) findViewById(R.id.edittext_price_min);
+                                    input_price_min.setFilters(new InputFilter[] { filter });
+
+                                    EditText input_price_max = (EditText) findViewById(R.id.edittext_price_max);
+                                    input_price_max.setFilters(new InputFilter[] { filter });
+
                                     final CircularProgressButton btnSearch = (CircularProgressButton) findViewById(R.id.btn_search);
                                     btnSearch.setIndeterminateProgressMode(true);
                                     btnSearch.setOnClickListener(new CircularProgressButton.OnClickListener() {
@@ -60,7 +70,12 @@ public class MainActivity extends Activity {
                                             String district = ((Spinner) findViewById(R.id.spinner_option_diner_district))
                                                     .getSelectedItem().toString();
 
-                                            service.getDiners(cuisine, district, category, "0", "2000000", "6",
+                                            String price_min = ((EditText) findViewById(R.id.edittext_price_min)).getText().toString();
+                                            String price_max = ((EditText) findViewById(R.id.edittext_price_max)).getText().toString();
+
+                                            service.getDiners(cuisine, district, category,
+                                                    price_min, price_max,
+                                                    "6",
                                                     new Callback<List<Diner>>() {
                                                 @Override
                                                 public void success(List<Diner> diners, Response response) {
@@ -106,6 +121,15 @@ public class MainActivity extends Activity {
         setSpinnerData(R.id.spinner_option_diner_cuisine, options.getCuisines());
         setSpinnerData(R.id.spinner_option_diner_category, options.getCategories());
         setSpinnerData(R.id.spinner_option_diner_district, options.getDistricts());
+
+        InputFilter filter = new InputFilterMinMax(options.getPriceMin(), options.getPriceMax());
+
+        EditText input_price_min = (EditText) findViewById(R.id.edittext_price_min);
+        input_price_min.setFilters(new InputFilter[]{filter});
+
+        EditText input_price_max = (EditText) findViewById(R.id.edittext_price_max);
+        input_price_max.setFilters(new InputFilter[]{filter});
+
     }
 
 
