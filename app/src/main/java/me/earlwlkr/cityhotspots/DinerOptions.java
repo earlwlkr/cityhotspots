@@ -12,13 +12,13 @@ import java.util.List;
 @Parcel
 public class DinerOptions {
     @SerializedName("cuisines")
-    List<String> cuisines;
+    private List<String> cuisines;
 
     @SerializedName("districts")
-    List<String> districts;
+    private List<String> districts;
 
     @SerializedName("categories")
-    List<String> categories;
+    private List<String> categories;
 
     public List<String> getCuisines() { return cuisines; }
     public List<String> getDistricts() { return districts; }
