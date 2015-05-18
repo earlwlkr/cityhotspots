@@ -37,6 +37,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />
         </activity>
+        <activity
+            android:name=".ui.DinersListActivity"
+            android:label="@string/title_activity_diners_list"
+            android:parentActivityName=".ui.DinerOptionsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="me.earlwlkr.cityhotspots.ui.DinerOptionsActivity" />
+        </activity>
     </application>
 
 </manifest>
