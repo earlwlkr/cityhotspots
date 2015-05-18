@@ -3,23 +3,26 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
+    android:layout_marginBottom="@dimen/spacing_small"
     >
+
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         card_view:cardCornerRadius="4dp"
         style="@style/StyleCardView"
         >
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             >
+
             <TextView
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_normal"
                 android:textStyle="bold"
                 android:text="Name"
                 />
@@ -29,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/name"
-                android:textSize="14sp"
+                android:textSize="@dimen/font_small"
                 android:text="Address"
                 />
 
