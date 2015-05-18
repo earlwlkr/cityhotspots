@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.dd.CircularProgressButton;
 
@@ -107,6 +108,12 @@ public class DinerOptionsActivity extends Activity {
                             @Override
                             public void success(List<Diner> diners, Response response) {
                                 btnSearch.setProgress(100);
+                                if (diners.isEmpty()) {
+                                    Toast.makeText(getApplicationContext(), "Không tìm thấy địa điểm", Toast.LENGTH_LONG).show();
+                                    btnSearch.setProgress(0);
+                                } else {
+
+                                }
                                 System.out.println(diners.size());
                             }
 
