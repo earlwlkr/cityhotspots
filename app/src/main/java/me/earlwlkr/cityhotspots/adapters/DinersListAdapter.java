@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -22,7 +23,7 @@ public class DinersListAdapter extends RecyclerView.Adapter<DinersListAdapter.Vi
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
         public TextView name;
         public TextView address;
@@ -31,6 +32,12 @@ public class DinersListAdapter extends RecyclerView.Adapter<DinersListAdapter.Vi
             super(v);
             name = (TextView) v.findViewById(R.id.name);
             address = (TextView) v.findViewById(R.id.address);
+            v.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            System.out.println("You clicked item.");
         }
     }
 
