@@ -32,7 +32,8 @@
 
         <activity
             android:name=".ui.DinerOptionsActivity"
-            android:label="@string/title_activity_diner_options" >
+            android:label="@string/title_activity_diner_options"
+            android:launchMode="singleTop" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />
