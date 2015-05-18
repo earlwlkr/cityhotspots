@@ -25,19 +25,26 @@ public class DinersListAdapter extends RecyclerView.Adapter<DinersListAdapter.Vi
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
-        public TextView name;
-        public TextView address;
+        private TextView mName;
+        private TextView mAddress;
+        private Diner mDiner;
 
         public ViewHolder(View v) {
             super(v);
-            name = (TextView) v.findViewById(R.id.name);
-            address = (TextView) v.findViewById(R.id.address);
+            mName = (TextView) v.findViewById(R.id.name);
+            mAddress = (TextView) v.findViewById(R.id.address);
             v.setOnClickListener(this);
+        }
+
+        public void setDiner(Diner diner) {
+            mDiner = diner;
+            mName.setText(diner.getName());
+            mAddress.setText(diner.getAddress().getStreetAddress());
         }
 
         @Override
         public void onClick(View v) {
-            System.out.println("You clicked item.");
+            System.out.println("You clicked on diner " + mDiner.getName());
         }
     }
 
@@ -54,8 +61,7 @@ public class DinersListAdapter extends RecyclerView.Adapter<DinersListAdapter.Vi
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.layout_diner_row, parent, false);
 
-        ViewHolder vh = new ViewHolder(view);
-        return vh;
+        return new ViewHolder(view);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -63,8 +69,7 @@ public class DinersListAdapter extends RecyclerView.Adapter<DinersListAdapter.Vi
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.name.setText(mDinersList.get(position).getName());
-        holder.address.setText((mDinersList.get(position).getAddress().getStreetAddress()));
+        holder.setDiner(mDinersList.get(position));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
