@@ -18,4 +18,6 @@
     <string name="error">Error</string>
     <string name="complete">Complete</string>
 
+    <string name="action_map">View on GMap</string>
+
 </resources>
