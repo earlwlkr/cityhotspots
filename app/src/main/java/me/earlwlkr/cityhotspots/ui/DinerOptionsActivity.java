@@ -63,6 +63,7 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diner_options);
 
+        // Back button on ActionBar
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         mSpinnerCuisine = (Spinner) findViewById(R.id.spinner_option_diner_cuisine);
@@ -73,11 +74,13 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
         mBtnSearch.setIndeterminateProgressMode(true);
         mBtnSearch.setOnClickListener(this);
 
-        Bundle bundle = this.getIntent().getExtras();
         RestClient restClient = RestClient.getInstance();
         mService = restClient.getApiService();
 
+        // Get wrapped options object from MainActivity
+        Bundle bundle = this.getIntent().getExtras();
         DinerOptions options = Parcels.unwrap(bundle.getParcelable("options"));
+        // If navigated from DinersListActivity
         if (options == null) {
             options = mService.getDinerOptions();
         }
@@ -85,12 +88,14 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
     }
 
     public void onClick(View v) {
+        // Set button loading state
         mBtnSearch.setProgress(50);
         String
                 cuisine = mSpinnerCuisine.getSelectedItem().toString(),
                 category = mSpinnerCategory.getSelectedItem().toString(),
                 district = mSpinnerDistrict.getSelectedItem().toString();
 
+        // Remove params if selected option is 'All'
         if (cuisine.equals("Tất cả")) {
             cuisine = null;
         }
