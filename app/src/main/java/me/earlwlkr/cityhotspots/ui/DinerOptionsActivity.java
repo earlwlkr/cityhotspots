@@ -1,6 +1,7 @@
 package me.earlwlkr.cityhotspots.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
@@ -122,9 +123,12 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
                             Toast.makeText(getApplicationContext(), "Không tìm thấy địa điểm", Toast.LENGTH_LONG).show();
                             mBtnSearch.setProgress(0);
                         } else {
-
+                            Intent i = new Intent(getApplicationContext(), DinersListActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("diners", Parcels.wrap(diners));
+                            i.putExtras(bundle);
+                            startActivity(i);
                         }
-                        System.out.println(diners.size());
                     }
 
                     @Override

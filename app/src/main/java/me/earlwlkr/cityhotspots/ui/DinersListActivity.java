@@ -1,18 +1,31 @@
 package me.earlwlkr.cityhotspots.ui;
 
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import me.earlwlkr.cityhotspots.R;
+import org.parceler.Parcels;
 
-public class DinersListActivity extends ActionBarActivity {
+import java.util.List;
+
+import me.earlwlkr.cityhotspots.R;
+import me.earlwlkr.cityhotspots.models.Diner;
+
+public class DinersListActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diners_list);
+        Bundle bundle = this.getIntent().getExtras();
+        List<Diner> diners = Parcels.unwrap(bundle.getParcelable("diners"));
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment, DinersListFragment.createInstance(diners))
+                    .commit();
+        }
     }
 
 
