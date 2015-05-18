@@ -73,6 +73,9 @@ public class DinerOptionsActivity extends Activity {
         final CityHotSpotsService service = restClient.getApiService();
 
         DinerOptions options = Parcels.unwrap(bundle.getParcelable("options"));
+        if (options == null) {
+            options = service.getDinerOptions();
+        }
         fetchOptions(options);
 
         final CircularProgressButton btnSearch = (CircularProgressButton) findViewById(R.id.btn_search);
