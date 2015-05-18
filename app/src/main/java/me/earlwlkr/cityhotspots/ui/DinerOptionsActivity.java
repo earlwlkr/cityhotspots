@@ -33,8 +33,9 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
     private Spinner mSpinnerCategory;
     private Spinner mSpinnerDistrict;
     private RangeSeekBar<Integer> mPriceRange;
-    CircularProgressButton mBtnSearch;
-    CityHotSpotsService mService;
+    private CircularProgressButton mBtnSearch;
+    private CityHotSpotsService mService;
+    private DinerOptions mOptions;
 
     private void setSpinnerData(Spinner spinner, List<String> data) {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
@@ -60,6 +61,20 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable("options", Parcels.wrap(mOptions));
+        System.out.println("Saving state...");
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mOptions = Parcels.unwrap(savedInstanceState.getParcelable("options"));
+        System.out.println("Loading state...");
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diner_options);
@@ -80,12 +95,16 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
 
         // Get wrapped options object from MainActivity
         Bundle bundle = this.getIntent().getExtras();
-        DinerOptions options = Parcels.unwrap(bundle.getParcelable("options"));
-        // If navigated from DinersListActivity
-        if (options == null) {
-            options = mService.getDinerOptions();
+        if (mOptions == null) {
+            // If navigated back from DinersListActivity
+            if (savedInstanceState != null) {
+                System.out.println("Loading state onCreate...");
+                mOptions = Parcels.unwrap(savedInstanceState.getParcelable("options"));
+            } else if (bundle != null) {
+                mOptions = Parcels.unwrap(bundle.getParcelable("options"));
+            }
         }
-        fetchOptions(options);
+        fetchOptions(mOptions);
     }
 
     public void onClick(View v) {
