@@ -1,4 +1,4 @@
-package me.earlwlkr.cityhotspots;
+package me.earlwlkr.cityhotspots.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -15,6 +15,11 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import me.earlwlkr.cityhotspots.service.CityHotSpotsService;
+import me.earlwlkr.cityhotspots.model.Diner;
+import me.earlwlkr.cityhotspots.model.DinerOptions;
+import me.earlwlkr.cityhotspots.R;
+import me.earlwlkr.cityhotspots.service.RestClient;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

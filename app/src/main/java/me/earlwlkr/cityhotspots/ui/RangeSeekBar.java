@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package me.earlwlkr.cityhotspots;
+package me.earlwlkr.cityhotspots.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -28,6 +28,8 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.widget.ImageView;
 import java.math.BigDecimal;
+
+import me.earlwlkr.cityhotspots.R;
 
 /**
  * Widget that lets users select a minimum and maximum value on a given numerical range.

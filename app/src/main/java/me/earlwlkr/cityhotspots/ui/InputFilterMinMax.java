@@ -1,4 +1,4 @@
-package me.earlwlkr.cityhotspots;
+package me.earlwlkr.cityhotspots.ui;
 
 import android.text.InputFilter;
 import android.text.Spanned;

@@ -1,10 +1,12 @@
-package me.earlwlkr.cityhotspots;
+package me.earlwlkr.cityhotspots.model;
 
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
 import java.util.Date;
+
+import me.earlwlkr.cityhotspots.model.Address;
 
 /**
  * Created by earl on 5/14/2015.

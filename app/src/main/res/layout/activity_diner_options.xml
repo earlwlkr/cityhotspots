@@ -69,7 +69,7 @@
                 style="@style/OptionName"
                 />
 
-            <me.earlwlkr.cityhotspots.RangeSeekBar
+            <me.earlwlkr.cityhotspots.ui.RangeSeekBar
                 android:id="@+id/price_range"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

@@ -1,10 +1,11 @@
-package me.earlwlkr.cityhotspots;
+package me.earlwlkr.cityhotspots.service;
 
 import java.util.List;
 
+import me.earlwlkr.cityhotspots.model.Diner;
+import me.earlwlkr.cityhotspots.model.DinerOptions;
 import retrofit.Callback;
 import retrofit.http.GET;
-import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**

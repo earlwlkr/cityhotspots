@@ -1,9 +1,8 @@
-package me.earlwlkr.cityhotspots;
+package me.earlwlkr.cityhotspots.ui;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +12,10 @@ import android.widget.ListView;
 
 import org.parceler.Parcels;
 
+import me.earlwlkr.cityhotspots.service.CityHotSpotsService;
+import me.earlwlkr.cityhotspots.model.DinerOptions;
+import me.earlwlkr.cityhotspots.R;
+import me.earlwlkr.cityhotspots.service.RestClient;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

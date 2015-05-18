@@ -1,4 +1,4 @@
-package me.earlwlkr.cityhotspots;
+package me.earlwlkr.cityhotspots.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
