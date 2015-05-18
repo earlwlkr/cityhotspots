@@ -63,7 +63,6 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelable("options", Parcels.wrap(mOptions));
-        System.out.println("Saving state...");
         super.onSaveInstanceState(outState);
     }
 
@@ -71,7 +70,6 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mOptions = Parcels.unwrap(savedInstanceState.getParcelable("options"));
-        System.out.println("Loading state...");
     }
 
     @Override
@@ -98,7 +96,6 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
         if (mOptions == null) {
             // If navigated back from DinersListActivity
             if (savedInstanceState != null) {
-                System.out.println("Loading state onCreate...");
                 mOptions = Parcels.unwrap(savedInstanceState.getParcelable("options"));
             } else if (bundle != null) {
                 mOptions = Parcels.unwrap(bundle.getParcelable("options"));
