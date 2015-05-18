@@ -26,12 +26,14 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class DinerOptionsActivity extends Activity {
+public class DinerOptionsActivity extends Activity implements View.OnClickListener {
 
     private Spinner spinnerCuisine;
     private Spinner spinnerCategory;
     private Spinner spinnerDistrict;
     private RangeSeekBar<Integer> priceRange;
+    CircularProgressButton btnSearch;
+    CityHotSpotsService service;
 
     private void setSpinnerData(Spinner spinner, List<String> data) {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
@@ -67,66 +69,64 @@ public class DinerOptionsActivity extends Activity {
         spinnerCategory = (Spinner) findViewById(R.id.spinner_option_diner_category);
         spinnerDistrict = (Spinner) findViewById(R.id.spinner_option_diner_district);
         priceRange = (RangeSeekBar<Integer>) findViewById(R.id.price_range);
+        btnSearch = (CircularProgressButton) findViewById(R.id.btn_search);
+        btnSearch.setIndeterminateProgressMode(true);
+        btnSearch.setOnClickListener(this);
 
         Bundle bundle = this.getIntent().getExtras();
         RestClient restClient = RestClient.getInstance();
-        final CityHotSpotsService service = restClient.getApiService();
+        service = restClient.getApiService();
 
         DinerOptions options = Parcels.unwrap(bundle.getParcelable("options"));
         if (options == null) {
             options = service.getDinerOptions();
         }
         fetchOptions(options);
+    }
 
-        final CircularProgressButton btnSearch = (CircularProgressButton) findViewById(R.id.btn_search);
-        btnSearch.setIndeterminateProgressMode(true);
-        btnSearch.setOnClickListener(new CircularProgressButton.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnSearch.setProgress(50);
-                String
-                    cuisine = spinnerCuisine.getSelectedItem().toString(),
-                    category = spinnerCategory.getSelectedItem().toString(),
-                    district = spinnerDistrict.getSelectedItem().toString();
+    public void onClick(View v) {
+        btnSearch.setProgress(50);
+        String
+                cuisine = spinnerCuisine.getSelectedItem().toString(),
+                category = spinnerCategory.getSelectedItem().toString(),
+                district = spinnerDistrict.getSelectedItem().toString();
 
-                if (cuisine.equals("Tất cả")) {
-                    cuisine = null;
-                }
+        if (cuisine.equals("Tất cả")) {
+            cuisine = null;
+        }
 
-                if (category.equals("Tất cả")) {
-                    category = null;
-                }
+        if (category.equals("Tất cả")) {
+            category = null;
+        }
 
-                if (district.equals("Tất cả")) {
-                    district = null;
-                }
+        if (district.equals("Tất cả")) {
+            district = null;
+        }
 
-                String price_min = priceRange.getSelectedMinValue().toString();
-                String price_max = priceRange.getSelectedMaxValue().toString();
+        String price_min = priceRange.getSelectedMinValue().toString();
+        String price_max = priceRange.getSelectedMaxValue().toString();
 
-                service.getDiners(cuisine, district, category,
-                        price_min, price_max,
-                        "6",
-                        new Callback<List<Diner>>() {
-                            @Override
-                            public void success(List<Diner> diners, Response response) {
-                                btnSearch.setProgress(100);
-                                if (diners.isEmpty()) {
-                                    Toast.makeText(getApplicationContext(), "Không tìm thấy địa điểm", Toast.LENGTH_LONG).show();
-                                    btnSearch.setProgress(0);
-                                } else {
+        service.getDiners(cuisine, district, category,
+                price_min, price_max,
+                "6",
+                new Callback<List<Diner>>() {
+                    @Override
+                    public void success(List<Diner> diners, Response response) {
+                        btnSearch.setProgress(100);
+                        if (diners.isEmpty()) {
+                            Toast.makeText(getApplicationContext(), "Không tìm thấy địa điểm", Toast.LENGTH_LONG).show();
+                            btnSearch.setProgress(0);
+                        } else {
 
-                                }
-                                System.out.println(diners.size());
-                            }
+                        }
+                        System.out.println(diners.size());
+                    }
 
-                            @Override
-                            public void failure(RetrofitError error) {
-                                btnSearch.setProgress(-1);
-                            }
-                        });
-            }
-        });
+                    @Override
+                    public void failure(RetrofitError error) {
+                        btnSearch.setProgress(-1);
+                    }
+                });
     }
 
     @Override
