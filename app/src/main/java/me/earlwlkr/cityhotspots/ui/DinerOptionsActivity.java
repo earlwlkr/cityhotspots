@@ -134,10 +134,9 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
                 new Callback<List<Diner>>() {
                     @Override
                     public void success(List<Diner> diners, Response response) {
-                        mBtnSearch.setProgress(100);
+                        mBtnSearch.setProgress(0);
                         if (diners.isEmpty()) {
                             Toast.makeText(getApplicationContext(), "Không tìm thấy địa điểm", Toast.LENGTH_LONG).show();
-                            mBtnSearch.setProgress(0);
                         } else {
                             Intent i = new Intent(getApplicationContext(), DinersListActivity.class);
                             Bundle bundle = new Bundle();
