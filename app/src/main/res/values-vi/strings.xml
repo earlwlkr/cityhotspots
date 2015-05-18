@@ -3,6 +3,8 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Cài đặt</string>
+    <string name="title_activity_diner_options">Tùy chỉnh</string>
+    <string name="title_activity_diners_list">Danh sách quán ăn</string>
 
     <string name="option_diner_cuisine">Nền ẩm thực:</string>
     <string name="option_diner_category">Danh mục:</string>
@@ -13,6 +15,4 @@
     <string name="error">Lỗi</string>
     <string name="complete">Hoàn thành</string>
 
-    <string name="demo_min_label">Min</string>
-    <string name="demo_max_label">Max</string>
 </resources>
