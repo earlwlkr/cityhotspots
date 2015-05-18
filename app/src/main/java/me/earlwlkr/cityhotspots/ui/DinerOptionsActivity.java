@@ -17,8 +17,8 @@ import org.parceler.Parcels;
 import java.util.List;
 
 import me.earlwlkr.cityhotspots.service.CityHotSpotsService;
-import me.earlwlkr.cityhotspots.model.Diner;
-import me.earlwlkr.cityhotspots.model.DinerOptions;
+import me.earlwlkr.cityhotspots.models.Diner;
+import me.earlwlkr.cityhotspots.models.DinerOptions;
 import me.earlwlkr.cityhotspots.R;
 import me.earlwlkr.cityhotspots.service.RestClient;
 import retrofit.Callback;

@@ -13,7 +13,7 @@ import android.widget.ListView;
 import org.parceler.Parcels;
 
 import me.earlwlkr.cityhotspots.service.CityHotSpotsService;
-import me.earlwlkr.cityhotspots.model.DinerOptions;
+import me.earlwlkr.cityhotspots.models.DinerOptions;
 import me.earlwlkr.cityhotspots.R;
 import me.earlwlkr.cityhotspots.service.RestClient;
 import retrofit.Callback;
@@ -45,7 +45,6 @@ public class MainActivity extends Activity {
                             service.getDinerOptions(new Callback<DinerOptions>() {
                                 @Override
                                 public void success(DinerOptions options, Response response) {
-                                    // got the list of contributors
                                     Intent i = new Intent(getApplicationContext(), DinerOptionsActivity.class);
                                     Bundle bundle = new Bundle();
                                     bundle.putParcelable("options", Parcels.wrap(options));

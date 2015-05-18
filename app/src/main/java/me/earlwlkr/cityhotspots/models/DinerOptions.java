@@ -1,4 +1,4 @@
-package me.earlwlkr.cityhotspots.model;
+package me.earlwlkr.cityhotspots.models;
 
 import com.google.gson.annotations.SerializedName;
 

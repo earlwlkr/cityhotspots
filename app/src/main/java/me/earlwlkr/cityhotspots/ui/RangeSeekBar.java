@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import java.math.BigDecimal;
 
 import me.earlwlkr.cityhotspots.R;
+import me.earlwlkr.cityhotspots.utils.PixelUtil;
 
 /**
  * Widget that lets users select a minimum and maximum value on a given numerical range.
