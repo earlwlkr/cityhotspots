@@ -1,5 +1,6 @@
 package me.earlwlkr.cityhotspots.models;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
@@ -34,6 +35,16 @@ public class Diner {
     private Date closeTime;
 
     private Address address;
+
+    private LatLng position;
+
+    public LatLng getPosition() {
+        return position;
+    }
+
+    public void setPosition(LatLng position) {
+        this.position = position;
+    }
 
     public int getFoodyId() {
         return foodyId;

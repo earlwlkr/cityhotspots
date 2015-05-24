@@ -100,9 +100,9 @@ public class MapViewFragment extends Fragment {
         return v;
     }
 
-    private class ShowMarkers extends AsyncTask<List<Diner>, Void, ArrayList<LatLng>> {
+    private class ShowMarkers extends AsyncTask<List<Diner>, Void, List<Diner>> {
         @Override
-        protected ArrayList<LatLng> doInBackground(List<Diner>... diners) {
+        protected List<Diner> doInBackground(List<Diner>... diners) {
             int count = 0;
             ArrayList<LatLng> positions = new ArrayList<LatLng>();
             for (Diner diner: diners[0])
@@ -111,29 +111,33 @@ public class MapViewFragment extends Fragment {
                         + " " + diner.getAddress().getCity();
                 LatLng dinerLatlng = getLocationFromAddress(address);
                 if (dinerLatlng != null) {
+                    diner.setPosition(dinerLatlng);
                     positions.add(dinerLatlng);
                 } else {
                     System.out.println(address);
-                    System.out.println(count++);
+                    System.out.println(++count);
                 }
             }
-            return positions;
+            return diners[0];
         }
 
         @Override
-        protected void onPostExecute(ArrayList<LatLng> result) {
-            super.onPostExecute(result);
-            for (LatLng latLng: result) {
-                mMap.addMarker(new MarkerOptions().position(latLng));
+        protected void onPostExecute(List<Diner> diners) {
+            super.onPostExecute(diners);
+            for (Diner diner: diners) {
+                LatLng pos = diner.getPosition();
+                if (pos != null) {
+                    mMap.addMarker(new MarkerOptions().position(pos).title(diner.getName()).snippet(diner.getCuisine()));
+                }
             }
         }
     }
 
     public LatLng getLocationFromAddress(String strAddress) {
         Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-        List<Address> address;
         try {
-            address = geocoder.getFromLocationName(strAddress, 1);
+            List<Address> address = geocoder.getFromLocationName(strAddress, 1);
+
             if (address.size() > 0) {
                 Address location = address.get(0);
                 return new LatLng(location.getLatitude(), location.getLongitude());
@@ -142,27 +146,6 @@ public class MapViewFragment extends Fragment {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public  String getAddressFromLocation(Location loc) {
-        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-        List<Address> addresses = null;
-        try {
-            addresses = geocoder.getFromLocation(loc.getLatitude(), loc.getLongitude(), 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Get the most accurate address.
-        Address address = addresses.get(0);
-        // Build address string.
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
-            sb.append(address.getAddressLine(i)).append("\n");
-        }
-        sb.append(address.getCountryName());
-        String addressText = sb.toString();
-        return addressText;
     }
 
     @Override
