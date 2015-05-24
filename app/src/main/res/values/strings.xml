@@ -19,5 +19,6 @@
     <string name="complete">Complete</string>
 
     <string name="action_map">View on GMap</string>
+    <string name="title_activity_map_view">Map</string>
 
 </resources>

@@ -17,18 +17,27 @@ import me.earlwlkr.cityhotspots.models.Diner;
 
 public class DinersListActivity extends FragmentActivity {
     private List<Diner> mDinersList;
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable("diners", Parcels.wrap(mDinersList));
+        super.onSaveInstanceState(outState);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diners_list);
         Bundle bundle = this.getIntent().getExtras();
-        List<Diner> diners = Parcels.unwrap(bundle.getParcelable("diners"));
-        mDinersList = diners;
+        if (bundle == null) {
+            bundle = savedInstanceState;
+        }
+        mDinersList = Parcels.unwrap(bundle.getParcelable("diners"));
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment, DinersListFragment.createInstance(diners))
+                    .add(R.id.fragment_diners_list, DinersListFragment.createInstance(mDinersList))
                     .commit();
         }
     }
@@ -51,11 +60,11 @@ public class DinersListActivity extends FragmentActivity {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.map:
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("geo:0,0?q=" +
-                        Uri.encode(mDinersList.get(0).getAddress().getStreetAddress() +
-                        mDinersList.get(0).getAddress().getDistrict())));
-                startActivity(intent);
+                Intent i = new Intent(getApplicationContext(), MapViewActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("diners", Parcels.wrap(mDinersList));
+                i.putExtras(bundle);
+                startActivity(i);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

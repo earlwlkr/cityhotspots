@@ -15,6 +15,7 @@
     <string name="error">Lỗi</string>
     <string name="complete">Hoàn thành</string>
 
-    <string name="action_map">Xem trên GMap</string>
+    <string name="action_map">Xem trên Map</string>
+    <string name="title_activity_map_view">Bản đồ</string>
 
 </resources>
