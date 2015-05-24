@@ -6,6 +6,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.parceler.Parcels;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -42,8 +44,7 @@ public class MapViewFragment extends Fragment {
         @Override
         public void onLocationChanged(final Location location) {
             mLastLocation = location;
-            if (mMap != null)
-            {
+            if (mMap != null) {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastLocation.getLatitude(),
                         mLastLocation.getLongitude()), 17));
             }
@@ -93,16 +94,39 @@ public class MapViewFragment extends Fragment {
                     mLastLocation.getLongitude()), 17));
         }
         List<Diner> diners = Parcels.unwrap(getArguments().getParcelable("diners"));
-        for (Diner diner: diners)
-        {
-            String address = diner.getAddress().getStreetAddress() + " " + diner.getAddress().getCity();
-            LatLng dinerLatlng = getLocationFromAddress(address);
-            if (dinerLatlng != null) {
-                mMap.addMarker(new MarkerOptions().position(dinerLatlng).title(diner.getName()));
-            }
-        }
+        ShowMarkers task = new ShowMarkers();
+        task.execute(diners);
 
         return v;
+    }
+
+    private class ShowMarkers extends AsyncTask<List<Diner>, Void, ArrayList<LatLng>> {
+        @Override
+        protected ArrayList<LatLng> doInBackground(List<Diner>... diners) {
+            int count = 0;
+            ArrayList<LatLng> positions = new ArrayList<LatLng>();
+            for (Diner diner: diners[0])
+            {
+                String address = diner.getAddress().getStreetAddress() + " " + diner.getAddress().getDistrict()
+                        + " " + diner.getAddress().getCity();
+                LatLng dinerLatlng = getLocationFromAddress(address);
+                if (dinerLatlng != null) {
+                    positions.add(dinerLatlng);
+                } else {
+                    System.out.println(address);
+                    System.out.println(count++);
+                }
+            }
+            return positions;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<LatLng> result) {
+            super.onPostExecute(result);
+            for (LatLng latLng: result) {
+                mMap.addMarker(new MarkerOptions().position(latLng));
+            }
+        }
     }
 
     public LatLng getLocationFromAddress(String strAddress) {
