@@ -1,6 +1,8 @@
 package me.earlwlkr.cityhotspots.ui;
 
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -15,10 +17,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.parceler.Parcels;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import me.earlwlkr.cityhotspots.R;
 import me.earlwlkr.cityhotspots.models.Diner;
@@ -77,7 +82,6 @@ public class MapViewFragment extends Fragment {
         mMap.setMyLocationEnabled(true);
 
         mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-
         mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 200l, 500.0f, mLocationListener);
 
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
@@ -88,8 +92,53 @@ public class MapViewFragment extends Fragment {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastLocation.getLatitude(),
                     mLastLocation.getLongitude()), 17));
         }
+        List<Diner> diners = Parcels.unwrap(getArguments().getParcelable("diners"));
+        for (Diner diner: diners)
+        {
+            String address = diner.getAddress().getStreetAddress() + " " + diner.getAddress().getCity();
+            LatLng dinerLatlng = getLocationFromAddress(address);
+            if (dinerLatlng != null) {
+                mMap.addMarker(new MarkerOptions().position(dinerLatlng).title(diner.getName()));
+            }
+        }
 
         return v;
+    }
+
+    public LatLng getLocationFromAddress(String strAddress) {
+        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+        List<Address> address;
+        try {
+            address = geocoder.getFromLocationName(strAddress, 1);
+            if (address.size() > 0) {
+                Address location = address.get(0);
+                return new LatLng(location.getLatitude(), location.getLongitude());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public  String getAddressFromLocation(Location loc) {
+        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(loc.getLatitude(), loc.getLongitude(), 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Get the most accurate address.
+        Address address = addresses.get(0);
+        // Build address string.
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+            sb.append(address.getAddressLine(i)).append("\n");
+        }
+        sb.append(address.getCountryName());
+        String addressText = sb.toString();
+        return addressText;
     }
 
     @Override
