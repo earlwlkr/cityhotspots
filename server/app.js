@@ -6,6 +6,24 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
 db.once('open', function (callback) {
+  // GET: /cinemaoptions
+  app.get('/cinemaoptions', function(req, res) {
+    var collection = db.collection('cinemas');
+
+    collection.distinct('trademark', function(err, result) {
+      res.send(result);
+    });
+  });
+
+  // GET: /cinemas
+  app.get('/cinemas', function(req, res) {
+    var collection = db.collection('cinemas');
+    
+    collection.find().toArray(function(err, docs) {
+      res.json(docs);
+    });      
+  });
+
   // GET: /dineroptions
   app.get('/dineroptions', function(req, res) {
     var collection = db.collection('dineroptions');
