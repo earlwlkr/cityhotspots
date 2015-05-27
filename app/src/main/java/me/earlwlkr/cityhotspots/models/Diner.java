@@ -11,11 +11,9 @@ import java.util.Date;
  * Created by earl on 5/14/2015.
  */
 @Parcel
-public class Diner {
+public class Diner extends Place {
     @SerializedName("foody_id")
     private int foodyId;
-
-    private String name;
 
     @SerializedName("phone")
     private String phoneNumber;
@@ -34,8 +32,6 @@ public class Diner {
     @SerializedName("close_time")
     private Date closeTime;
 
-    private Address address;
-
     private LatLng position;
 
     public LatLng getPosition() {
@@ -52,14 +48,6 @@ public class Diner {
 
     public void setFoodyId(int foodyId) {
         this.foodyId = foodyId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getCuisine() {
@@ -92,14 +80,6 @@ public class Diner {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
     public Date getCloseTime() {
