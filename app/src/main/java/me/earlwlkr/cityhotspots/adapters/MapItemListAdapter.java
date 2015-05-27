@@ -7,17 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
 /**
  * Created by earl on 5/18/2015.
  */
-public class DinersListAdapter extends RecyclerView.Adapter<DinersListAdapter.ViewHolder> {
+public class MapItemListAdapter extends RecyclerView.Adapter<MapItemListAdapter.ViewHolder> {
     private List<Diner> mDinersList;
 
     // Provide a reference to the views for each data item
@@ -49,13 +46,13 @@ public class DinersListAdapter extends RecyclerView.Adapter<DinersListAdapter.Vi
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public DinersListAdapter(List<Diner> diners) {
+    public MapItemListAdapter(List<Diner> diners) {
         mDinersList = diners;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public DinersListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+    public MapItemListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
         // create a new view
         View view = LayoutInflater.from(parent.getContext())
