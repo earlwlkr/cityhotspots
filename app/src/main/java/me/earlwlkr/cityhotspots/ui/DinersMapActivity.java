@@ -19,7 +19,7 @@ public class DinersMapActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_view);
+        setContentView(R.layout.activity_diners_map);
 
         Bundle bundle = this.getIntent().getExtras();
         mDinersList = Parcels.unwrap(bundle.getParcelable("diners"));
@@ -27,7 +27,7 @@ public class DinersMapActivity extends FragmentActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_map_view, DinersMapFragment.createInstance(mDinersList))
+                    .add(R.id.fragment_diners_map, DinersMapFragment.createInstance(mDinersList))
                     .commit();
         }
     }
