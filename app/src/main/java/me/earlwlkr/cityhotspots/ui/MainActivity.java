@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import org.parceler.Parcels;
 
+import me.earlwlkr.cityhotspots.models.CinemaOptions;
 import me.earlwlkr.cityhotspots.service.CityHotSpotsService;
 import me.earlwlkr.cityhotspots.models.DinerOptions;
 import me.earlwlkr.cityhotspots.R;
@@ -46,6 +47,27 @@ public class MainActivity extends Activity {
                                 @Override
                                 public void success(DinerOptions options, Response response) {
                                     Intent i = new Intent(getApplicationContext(), DinerOptionsActivity.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putParcelable("options", Parcels.wrap(options));
+                                    i.putExtras(bundle);
+                                    startActivity(i);
+                                }
+
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    // Code for when something went wrong
+                                }
+                            });
+                        } catch (RetrofitError e) {
+                            System.out.println(e.getResponse().getStatus());
+                        }
+                        break;
+                    case 0:
+                        try {
+                            service.getCinemaOptions(new Callback<CinemaOptions>() {
+                                @Override
+                                public void success(CinemaOptions options, Response response) {
+                                    Intent i = new Intent(getApplicationContext(), CinemaOptionsActivity.class);
                                     Bundle bundle = new Bundle();
                                     bundle.putParcelable("options", Parcels.wrap(options));
                                     i.putExtras(bundle);
