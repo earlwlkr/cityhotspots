@@ -112,19 +112,6 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
                 category = mSpinnerCategory.getSelectedItem().toString(),
                 district = mSpinnerDistrict.getSelectedItem().toString();
 
-        // Remove params if selected option is 'All'
-        if (cuisine.equals("Tất cả")) {
-            cuisine = null;
-        }
-
-        if (category.equals("Tất cả")) {
-            category = null;
-        }
-
-        if (district.equals("Tất cả")) {
-            district = null;
-        }
-
         String price_min = mPriceRange.getSelectedMinValue().toString();
         String price_max = mPriceRange.getSelectedMaxValue().toString();
 

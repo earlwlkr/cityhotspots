@@ -43,15 +43,15 @@ db.once('open', function (callback) {
     var collection = db.collection('diners');
     
     var obj = {};
-    if (req.query.cuisine) {
+    if (req.query.cuisine && req.query.cuisine != 'Tất cả') {
       obj['cuisine'] = req.query.cuisine;
     }
     
-    if (req.query.district) {
+    if (req.query.district && req.query.district != 'Tất cả') {
       obj['address.district'] = req.query.district;
     }
     
-    if (req.query.category) {
+    if (req.query.category && req.query.category != 'Tất cả') {
       obj['category'] = req.query.category;
     }
     
