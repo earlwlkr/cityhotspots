@@ -3,9 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Cài đặt</string>
+    
     <string name="title_activity_diner_options">Tùy chỉnh</string>
     <string name="title_activity_diners_list">Danh sách quán ăn</string>
-
     <string name="option_diner_cuisine">Nền ẩm thực:</string>
     <string name="option_diner_category">Danh mục:</string>
     <string name="option_diner_district">Khu vực:</string>
@@ -17,5 +17,8 @@
 
     <string name="action_map">Xem trên Map</string>
     <string name="title_activity_map_view">Bản đồ</string>
+
+    <string name="title_activity_cinema_options">Tùy chỉnh</string>
+    <string name="option_cinema_trademark">Thương hiệu</string>
 
 </resources>

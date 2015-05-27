@@ -2,6 +2,8 @@ package me.earlwlkr.cityhotspots.service;
 
 import java.util.List;
 
+import me.earlwlkr.cityhotspots.models.Cinema;
+import me.earlwlkr.cityhotspots.models.CinemaOptions;
 import me.earlwlkr.cityhotspots.models.Diner;
 import me.earlwlkr.cityhotspots.models.DinerOptions;
 import retrofit.Callback;
@@ -26,4 +28,13 @@ public interface CityHotSpotsService {
 
     @GET("/dineroptions")
     void getDinerOptions(Callback<DinerOptions> diners);
+
+    @GET("/cinemaoptions")
+    CinemaOptions getCinemaOptions();
+
+    @GET("/cinemaoptions")
+    void getCinemaOptions(Callback<CinemaOptions> diners);
+
+    @GET("/cinemas")
+    void getCinemas(Callback<List<Cinema>> cinemas);
 }

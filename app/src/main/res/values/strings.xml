@@ -20,5 +20,8 @@
 
     <string name="action_map">View on GMap</string>
     <string name="title_activity_map_view">Map</string>
+    <string name="title_activity_cinema_options">CinemaOptionsActivity</string>
+
+    <string name="option_cinema_trademark">Trademark</string>
 
 </resources>
