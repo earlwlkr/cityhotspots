@@ -33,7 +33,7 @@ import me.earlwlkr.cityhotspots.models.Diner;
 /**
  * Show list of places on map for user to pick.
  */
-public class MapViewFragment extends Fragment {
+public class DinersMapFragment extends Fragment {
 
     MapView mapView;
     GoogleMap mMap;
@@ -59,15 +59,15 @@ public class MapViewFragment extends Fragment {
         public void onProviderDisabled(String provider) {}
     };
 
-    public static MapViewFragment createInstance(List<Diner> diners) {
-        MapViewFragment fragment = new MapViewFragment();
+    public static DinersMapFragment createInstance(List<Diner> diners) {
+        DinersMapFragment fragment = new DinersMapFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable("diners", Parcels.wrap(diners));
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    public MapViewFragment() {}
+    public DinersMapFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

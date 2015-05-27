@@ -59,7 +59,7 @@ public class CinemasListActivity extends FragmentActivity {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.map:
-                Intent i = new Intent(getApplicationContext(), MapViewActivity.class);
+                Intent i = new Intent(getApplicationContext(), DinersMapActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("cinemas", Parcels.wrap(mCinemasList));
                 i.putExtras(bundle);

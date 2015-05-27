@@ -1,8 +1,6 @@
 package me.earlwlkr.cityhotspots.ui;
 
-import android.app.Activity;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,7 +12,7 @@ import java.util.List;
 import me.earlwlkr.cityhotspots.R;
 import me.earlwlkr.cityhotspots.models.Diner;
 
-public class MapViewActivity extends FragmentActivity {
+public class DinersMapActivity extends FragmentActivity {
 
     private List<Diner> mDinersList;
 
@@ -29,7 +27,7 @@ public class MapViewActivity extends FragmentActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_map_view, MapViewFragment.createInstance(mDinersList))
+                    .add(R.id.fragment_map_view, DinersMapFragment.createInstance(mDinersList))
                     .commit();
         }
     }

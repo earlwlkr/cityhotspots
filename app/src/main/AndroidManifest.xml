@@ -48,7 +48,7 @@
                 android:value="me.earlwlkr.cityhotspots.ui.DinerOptionsActivity" />
         </activity>
         <activity
-            android:name=".ui.MapViewActivity"
+            android:name=".ui.DinersMapActivity"
             android:label="@string/title_activity_map_view"
             android:launchMode="singleTop"
             android:parentActivityName=".ui.DinersListActivity" >

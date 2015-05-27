@@ -1,7 +1,6 @@
 package me.earlwlkr.cityhotspots.ui;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -60,7 +59,7 @@ public class DinersListActivity extends FragmentActivity {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.map:
-                Intent i = new Intent(getApplicationContext(), MapViewActivity.class);
+                Intent i = new Intent(getApplicationContext(), DinersMapActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("diners", Parcels.wrap(mDinersList));
                 i.putExtras(bundle);
