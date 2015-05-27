@@ -11,7 +11,9 @@ db.once('open', function (callback) {
     var collection = db.collection('cinemas');
 
     collection.distinct('trademark', function(err, result) {
-      res.send(result);
+      var ret = {};
+      ret['trademarks'] = result;
+      res.send(ret);
     });
   });
 
