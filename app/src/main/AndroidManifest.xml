@@ -50,6 +50,7 @@
         <activity
             android:name=".ui.MapViewActivity"
             android:label="@string/title_activity_map_view"
+            android:launchMode="singleTop"
             android:parentActivityName=".ui.DinersListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -58,6 +59,7 @@
         <activity
             android:name=".ui.CinemaOptionsActivity"
             android:label="@string/title_activity_cinema_options"
+            android:launchMode="singleTop"
             android:parentActivityName=".ui.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -66,6 +68,7 @@
         <activity
             android:name=".ui.CinemasListActivity"
             android:label="@string/title_activity_cinemas_list"
+            android:launchMode="singleTop"
             android:parentActivityName=".ui.CinemaOptionsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
