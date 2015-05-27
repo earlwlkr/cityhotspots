@@ -36,5 +36,5 @@ public interface CityHotSpotsService {
     void getCinemaOptions(Callback<CinemaOptions> diners);
 
     @GET("/cinemas")
-    void getCinemas(Callback<List<Cinema>> cinemas);
+    void getCinemas(@Query("trademark") String trademark, Callback<List<Cinema>> cinemas);
 }

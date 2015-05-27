@@ -94,15 +94,9 @@ public class CinemaOptionsActivity extends Activity implements View.OnClickListe
     public void onClick(View v) {
         // Set button loading state
         mBtnSearch.setProgress(50);
-        String
-                trademark = mSpinnerTrademark.getSelectedItem().toString();
+        String trademark = mSpinnerTrademark.getSelectedItem().toString();
 
-        // Remove params if selected option is 'All'
-        if (trademark.equals("Tất cả")) {
-            trademark = null;
-        }
-
-        mService.getCinemas(
+        mService.getCinemas(trademark,
                 new Callback<List<Cinema>>() {
                     @Override
                     public void success(List<Cinema> cinemas, Response response) {
