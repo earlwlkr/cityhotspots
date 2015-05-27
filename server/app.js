@@ -12,7 +12,13 @@ db.once('open', function (callback) {
 
     collection.distinct('trademark', function(err, result) {
       var ret = {};
-      ret['trademarks'] = result;
+      ret['trademarks'] = ['Tất cả'];
+      for (var i = 0; i < result.length; i++) {
+        // If not null, push to return object
+        if (result[i]) {
+          ret['trademarks'].push(result[i]);
+        }
+      }
       res.send(ret);
     });
   });
