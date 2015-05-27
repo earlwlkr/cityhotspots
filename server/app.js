@@ -20,8 +20,11 @@ db.once('open', function (callback) {
   // GET: /cinemas
   app.get('/cinemas', function(req, res) {
     var collection = db.collection('cinemas');
-    
-    collection.find().toArray(function(err, docs) {
+    var obj = {};
+    if (req.query.trademark && req.query.trademark != 'Tất cả') {
+      obj['trademark'] = req.query.trademark;
+    }
+    collection.find(obj).toArray(function(err, docs) {
       res.json(docs);
     });      
   });
