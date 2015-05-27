@@ -13,7 +13,7 @@ import org.parceler.Parcels;
 import java.util.List;
 
 import me.earlwlkr.cityhotspots.R;
-import me.earlwlkr.cityhotspots.adapters.DinersListAdapter;
+import me.earlwlkr.cityhotspots.adapters.MapItemListAdapter;
 import me.earlwlkr.cityhotspots.models.Diner;
 
 /**
@@ -49,7 +49,7 @@ public class DinersListFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        DinersListAdapter mAdapter = new DinersListAdapter(diners);
+        MapItemListAdapter mAdapter = new MapItemListAdapter(diners);
         mRecyclerView.setAdapter(mAdapter);
         return view;
     }

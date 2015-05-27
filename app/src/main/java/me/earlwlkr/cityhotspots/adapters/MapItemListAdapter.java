@@ -2,6 +2,7 @@ package me.earlwlkr.cityhotspots.adapters;
 
 import me.earlwlkr.cityhotspots.R;
 import me.earlwlkr.cityhotspots.models.Diner;
+import me.earlwlkr.cityhotspots.models.Place;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +16,7 @@ import java.util.List;
  * Created by earl on 5/18/2015.
  */
 public class MapItemListAdapter extends RecyclerView.Adapter<MapItemListAdapter.ViewHolder> {
-    private List<Diner> mDinersList;
+    private List<? extends Place> mItems;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -24,7 +25,7 @@ public class MapItemListAdapter extends RecyclerView.Adapter<MapItemListAdapter.
         // each data item is just a string in this case
         private TextView mName;
         private TextView mAddress;
-        private Diner mDiner;
+        private Place mItem;
 
         public ViewHolder(View v) {
             super(v);
@@ -33,21 +34,21 @@ public class MapItemListAdapter extends RecyclerView.Adapter<MapItemListAdapter.
             v.setOnClickListener(this);
         }
 
-        public void setDiner(Diner diner) {
-            mDiner = diner;
-            mName.setText(diner.getName());
-            mAddress.setText(diner.getAddress().getStreetAddress());
+        public void setPlace(Place place) {
+            mItem = place;
+            mName.setText(place.getName());
+            mAddress.setText(place.getAddress().getStreetAddress());
         }
 
         @Override
         public void onClick(View v) {
-            System.out.println("You clicked on diner " + mDiner.getName());
+            System.out.println("You clicked on diner " + mItem.getName());
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MapItemListAdapter(List<Diner> diners) {
-        mDinersList = diners;
+    public MapItemListAdapter(List<? extends Place> places) {
+        mItems = places;
     }
 
     // Create new views (invoked by the layout manager)
@@ -66,12 +67,12 @@ public class MapItemListAdapter extends RecyclerView.Adapter<MapItemListAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.setDiner(mDinersList.get(position));
+        holder.setPlace(mItems.get(position));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDinersList.size();
+        return mItems.size();
     }
 }
