@@ -110,11 +110,11 @@ public class CinemaOptionsActivity extends Activity implements View.OnClickListe
                         if (cinemas.isEmpty()) {
                             Toast.makeText(getApplicationContext(), "Không tìm thấy địa điểm", Toast.LENGTH_LONG).show();
                         } else {
-//                            Intent i = new Intent(getApplicationContext(), DinersListActivity.class);
-//                            Bundle bundle = new Bundle();
-//                            bundle.putParcelable("diners", Parcels.wrap(cinemas));
-//                            i.putExtras(bundle);
-//                            startActivity(i);
+                            Intent i = new Intent(getApplicationContext(), CinemasListActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("cinemas", Parcels.wrap(cinemas));
+                            i.putExtras(bundle);
+                            startActivity(i);
                         }
                     }
 
