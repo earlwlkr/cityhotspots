@@ -28,12 +28,13 @@ import java.util.List;
 import java.util.Locale;
 
 import me.earlwlkr.cityhotspots.R;
+import me.earlwlkr.cityhotspots.models.Cinema;
 import me.earlwlkr.cityhotspots.models.Diner;
 
 /**
  * Show list of places on map for user to pick.
  */
-public class DinersMapFragment extends Fragment {
+public class CinemasMapFragment extends Fragment {
 
     MapView mapView;
     GoogleMap mMap;
@@ -59,15 +60,15 @@ public class DinersMapFragment extends Fragment {
         public void onProviderDisabled(String provider) {}
     };
 
-    public static DinersMapFragment createInstance(List<Diner> diners) {
-        DinersMapFragment fragment = new DinersMapFragment();
+    public static CinemasMapFragment createInstance(List<Cinema> cinemas) {
+        CinemasMapFragment fragment = new CinemasMapFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("diners", Parcels.wrap(diners));
+        bundle.putParcelable("cinemas", Parcels.wrap(cinemas));
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    public DinersMapFragment() {}
+    public CinemasMapFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,41 +94,41 @@ public class DinersMapFragment extends Fragment {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastLocation.getLatitude(),
                     mLastLocation.getLongitude()), 17));
         }
-        List<Diner> diners = Parcels.unwrap(getArguments().getParcelable("diners"));
+        List<Cinema> cinemas = Parcels.unwrap(getArguments().getParcelable("cinemas"));
         ShowMarkers task = new ShowMarkers();
-        task.execute(diners);
+        task.execute(cinemas);
 
         return v;
     }
 
-    private class ShowMarkers extends AsyncTask<List<Diner>, Void, List<Diner>> {
+    private class ShowMarkers extends AsyncTask<List<Cinema>, Void, List<Cinema>> {
         @Override
-        protected List<Diner> doInBackground(List<Diner>... diners) {
+        protected List<Cinema> doInBackground(List<Cinema>... cinemas) {
             int count = 0;
             ArrayList<LatLng> positions = new ArrayList<LatLng>();
-            for (Diner diner: diners[0])
+            for (Cinema cinema: cinemas[0])
             {
-                String address = diner.getAddress().getStreetAddress() + " " + diner.getAddress().getDistrict()
-                        + " " + diner.getAddress().getCity();
-                LatLng dinerLatlng = getLocationFromAddress(address);
-                if (dinerLatlng != null) {
-                    diner.setPosition(dinerLatlng);
-                    positions.add(dinerLatlng);
+                String address = cinema.getAddress().getStreetAddress() + " " + cinema.getAddress().getDistrict()
+                        + " " + cinema.getAddress().getCity();
+                LatLng pos = getLocationFromAddress(address);
+                if (pos != null) {
+                    cinema.setPosition(pos);
+                    positions.add(pos);
                 } else {
                     System.out.println(address);
                     System.out.println(++count);
                 }
             }
-            return diners[0];
+            return cinemas[0];
         }
 
         @Override
-        protected void onPostExecute(List<Diner> diners) {
-            super.onPostExecute(diners);
-            for (Diner diner: diners) {
-                LatLng pos = diner.getPosition();
+        protected void onPostExecute(List<Cinema> cinemas) {
+            super.onPostExecute(cinemas);
+            for (Cinema cinema: cinemas) {
+                LatLng pos = cinema.getPosition();
                 if (pos != null) {
-                    mMap.addMarker(new MarkerOptions().position(pos).title(diner.getName()).snippet(diner.getCuisine()));
+                    mMap.addMarker(new MarkerOptions().position(pos).title(cinema.getName()));
                 }
             }
         }

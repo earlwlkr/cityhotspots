@@ -10,11 +10,11 @@ import org.parceler.Parcels;
 import java.util.List;
 
 import me.earlwlkr.cityhotspots.R;
-import me.earlwlkr.cityhotspots.models.Diner;
+import me.earlwlkr.cityhotspots.models.Cinema;
 
-public class DinersMapActivity extends FragmentActivity {
+public class CinemasMapActivity extends FragmentActivity {
 
-    private List<Diner> mDinersList;
+    private List<Cinema> mCinemasList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,12 +22,12 @@ public class DinersMapActivity extends FragmentActivity {
         setContentView(R.layout.activity_map_view);
 
         Bundle bundle = this.getIntent().getExtras();
-        mDinersList = Parcels.unwrap(bundle.getParcelable("diners"));
+        mCinemasList = Parcels.unwrap(bundle.getParcelable("cinemas"));
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_map, DinersMapFragment.createInstance(mDinersList))
+                    .add(R.id.fragment_map, CinemasMapFragment.createInstance(mCinemasList))
                     .commit();
         }
     }

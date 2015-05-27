@@ -24,5 +24,6 @@
 
     <string name="option_cinema_trademark">Trademark</string>
     <string name="title_activity_cinemas_list">Cinemas</string>
+    <string name="title_activity_cinemas_map">Cinemas Map</string>
 
 </resources>

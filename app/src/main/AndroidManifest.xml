@@ -74,6 +74,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="me.earlwlkr.cityhotspots.ui.CinemaOptionsActivity" />
         </activity>
+        <activity
+            android:name=".ui.CinemasMapActivity"
+            android:label="@string/title_activity_cinemas_map"
+            android:parentActivityName=".ui.CinemasListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="me.earlwlkr.cityhotspots.ui.CinemasListActivity" />
+        </activity>
     </application>
 
 </manifest>
