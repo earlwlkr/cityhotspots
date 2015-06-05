@@ -42,6 +42,7 @@ public class DinersMapFragment extends Fragment implements GoogleMap.OnMarkerCli
     GoogleMap mMap;
     Location mLastLocation;
     LocationManager mLocationManager;
+    ShortestRouteFinder mRouteFinder;
 
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
@@ -97,6 +98,7 @@ public class DinersMapFragment extends Fragment implements GoogleMap.OnMarkerCli
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastLocation.getLatitude(),
                     mLastLocation.getLongitude()), 17));
         }
+        mRouteFinder = new ShortestRouteFinder(mMap);
         List<Diner> diners = Parcels.unwrap(getArguments().getParcelable("diners"));
         ShowMarkers task = new ShowMarkers();
         task.execute(diners);
@@ -151,8 +153,8 @@ public class DinersMapFragment extends Fragment implements GoogleMap.OnMarkerCli
     @Override
     public boolean onMarkerClick(Marker marker) {
         if (mLastLocation != null) {
-            new ShortestRouteFinder(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()),
-                    marker.getPosition(), mMap).findShortestRoute();
+            mRouteFinder.findShortestRoute(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()),
+                    marker.getPosition());
         }
         return false;
     }

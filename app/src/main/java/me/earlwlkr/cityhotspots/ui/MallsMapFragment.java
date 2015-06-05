@@ -42,6 +42,7 @@ public class MallsMapFragment extends Fragment implements GoogleMap.OnMarkerClic
     GoogleMap mMap;
     Location mLastLocation;
     LocationManager mLocationManager;
+    ShortestRouteFinder mRouteFinder;
 
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
@@ -97,6 +98,7 @@ public class MallsMapFragment extends Fragment implements GoogleMap.OnMarkerClic
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastLocation.getLatitude(),
                     mLastLocation.getLongitude()), 17));
         }
+        mRouteFinder = new ShortestRouteFinder(mMap);
         List<Place> malls = Parcels.unwrap(getArguments().getParcelable("malls"));
         ShowMarkers task = new ShowMarkers();
         task.execute(malls);
@@ -151,8 +153,8 @@ public class MallsMapFragment extends Fragment implements GoogleMap.OnMarkerClic
     @Override
     public boolean onMarkerClick(Marker marker) {
         if (mLastLocation != null) {
-            new ShortestRouteFinder(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()),
-                    marker.getPosition(), mMap).findShortestRoute();
+            mRouteFinder.findShortestRoute(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()),
+                    marker.getPosition());
         }
         return false;
     }

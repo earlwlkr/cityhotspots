@@ -19,6 +19,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.parceler.Parcels;
@@ -31,16 +32,18 @@ import java.util.Locale;
 import me.earlwlkr.cityhotspots.R;
 import me.earlwlkr.cityhotspots.models.Cinema;
 import me.earlwlkr.cityhotspots.models.Diner;
+import me.earlwlkr.cityhotspots.service.ShortestRouteFinder;
 
 /**
  * Show list of places on map for user to pick.
  */
-public class CinemasMapFragment extends Fragment {
+public class CinemasMapFragment extends Fragment implements GoogleMap.OnMarkerClickListener {
 
     MapView mapView;
     GoogleMap mMap;
     Location mLastLocation;
     LocationManager mLocationManager;
+    ShortestRouteFinder mRouteFinder;
 
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
@@ -89,12 +92,14 @@ public class CinemasMapFragment extends Fragment {
 
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
         MapsInitializer.initialize(this.getActivity());
+        mMap.setOnMarkerClickListener(this);
 
         // Updates the location and zoom of the MapView
         if (mLastLocation != null) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastLocation.getLatitude(),
                     mLastLocation.getLongitude()), 17));
         }
+        mRouteFinder = new ShortestRouteFinder(mMap);
         List<Cinema> cinemas = Parcels.unwrap(getArguments().getParcelable("cinemas"));
         ShowMarkers task = new ShowMarkers();
         task.execute(cinemas);
@@ -144,6 +149,15 @@ public class CinemasMapFragment extends Fragment {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        if (mLastLocation != null) {
+            mRouteFinder.findShortestRoute(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()),
+                    marker.getPosition());
+        }
+        return false;
     }
 
     public LatLng getLocationFromAddress(String strAddress) {

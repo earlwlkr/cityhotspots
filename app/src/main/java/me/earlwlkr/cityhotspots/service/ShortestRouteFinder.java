@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.json.JSONObject;
@@ -23,28 +24,32 @@ import me.earlwlkr.cityhotspots.utils.Utils;
 public class ShortestRouteFinder {
 
     private PolylineOptions mPolyLineOptions;
-    private LatLng mStartPos;
-    private LatLng mDestPos;
     private GoogleMap mMap;
+    private List<Polyline> mPolylines;
 
-    public ShortestRouteFinder(LatLng start, LatLng dest, GoogleMap map) {
+    public ShortestRouteFinder(GoogleMap map) {
         mPolyLineOptions = null;
-        mStartPos = start;
-        mDestPos = dest;
         mMap = map;
+        mPolylines = new ArrayList<Polyline>();
     }
 
-    public void findShortestRoute() {
-        String url = getMapsApiDirectionsUrl();
+    public void findShortestRoute(LatLng start, LatLng dest) {
+        for (Polyline line : mPolylines) {
+            line.remove();
+        }
+
+        mPolylines.clear();
+
+        String url = getMapsApiDirectionsUrl(start, dest);
         ReadTask downloadTask = new ReadTask();
         downloadTask.execute(url);
     }
 
-    private String getMapsApiDirectionsUrl() {
+    private String getMapsApiDirectionsUrl(LatLng start, LatLng dest) {
         String waypoints = "origin="
-                + mStartPos.latitude + "," + mStartPos.longitude
-                + "&destination=" + mDestPos.latitude + ","
-                + mDestPos.longitude;
+                + start.latitude + "," + start.longitude
+                + "&destination=" + dest.latitude + ","
+                + dest.longitude;
 
         String output = "json";
         String url = "https://maps.googleapis.com/maps/api/directions/"
@@ -114,7 +119,7 @@ public class ShortestRouteFinder {
                 mPolyLineOptions.color(Color.BLUE);
             }
 
-            mMap.addPolyline(mPolyLineOptions);
+            mPolylines.add(mMap.addPolyline(mPolyLineOptions));
         }
     }
 }
