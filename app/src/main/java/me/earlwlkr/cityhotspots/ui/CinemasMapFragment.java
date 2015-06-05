@@ -130,8 +130,6 @@ public class CinemasMapFragment extends Fragment {
                         System.out.println(++count);
                     }
                 }
-                // Handle Google API rate limit
-                SystemClock.sleep(200);
             }
             return cinemas[0];
         }

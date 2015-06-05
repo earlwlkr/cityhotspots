@@ -132,8 +132,6 @@ public class DinersMapFragment extends Fragment implements GoogleMap.OnMarkerCli
                         System.out.println(++count);
                     }
                 }
-                // Handle Google API rate limit
-                SystemClock.sleep(200);
             }
             return diners[0];
         }
