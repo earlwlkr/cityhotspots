@@ -18,6 +18,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.parceler.Parcels;
@@ -29,11 +30,12 @@ import java.util.Locale;
 
 import me.earlwlkr.cityhotspots.R;
 import me.earlwlkr.cityhotspots.models.Diner;
+import me.earlwlkr.cityhotspots.service.ShortestRouteFinder;
 
 /**
  * Show list of places on map for user to pick.
  */
-public class DinersMapFragment extends Fragment {
+public class DinersMapFragment extends Fragment implements GoogleMap.OnMarkerClickListener {
 
     MapView mapView;
     GoogleMap mMap;
@@ -87,6 +89,7 @@ public class DinersMapFragment extends Fragment {
 
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
         MapsInitializer.initialize(this.getActivity());
+        mMap.setOnMarkerClickListener(this);
 
         // Updates the location and zoom of the MapView
         if (mLastLocation != null) {
@@ -131,6 +134,15 @@ public class DinersMapFragment extends Fragment {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        if (mLastLocation != null) {
+            new ShortestRouteFinder(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()),
+                    marker.getPosition(), mMap).findShortestRoute();
+        }
+        return false;
     }
 
     public LatLng getLocationFromAddress(String strAddress) {
