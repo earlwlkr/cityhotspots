@@ -21,4 +21,7 @@
     <string name="title_activity_cinema_options">Tùy chỉnh</string>
     <string name="option_cinema_trademark">Thương hiệu</string>
     <string name="title_activity_cinemas_list">Rạp chiếu phim</string>
+    <string name="title_activity_malls_list">Trung tâm thương mại</string>
+    <string name="title_activity_malls_map">Trung tâm thương mại</string>
+
 </resources>

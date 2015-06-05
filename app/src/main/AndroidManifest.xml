@@ -82,6 +82,23 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="me.earlwlkr.cityhotspots.ui.CinemasListActivity" />
         </activity>
+        <activity
+            android:name=".ui.MallsListActivity"
+            android:label="@string/title_activity_malls_list"
+            android:launchMode="singleTop"
+            android:parentActivityName=".ui.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="me.earlwlkr.cityhotspots.ui.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.MallsMapActivity"
+            android:label="@string/title_activity_malls_map"
+            android:parentActivityName=".ui.MallsListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="me.earlwlkr.cityhotspots.ui.MallsListActivity" />
+        </activity>
     </application>
 
 </manifest>

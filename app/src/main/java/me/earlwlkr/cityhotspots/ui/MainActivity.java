@@ -9,10 +9,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.parceler.Parcels;
 
+import java.util.List;
+
 import me.earlwlkr.cityhotspots.models.CinemaOptions;
+import me.earlwlkr.cityhotspots.models.Place;
 import me.earlwlkr.cityhotspots.service.CityHotSpotsService;
 import me.earlwlkr.cityhotspots.models.DinerOptions;
 import me.earlwlkr.cityhotspots.R;
@@ -82,6 +86,25 @@ public class MainActivity extends Activity {
                         } catch (RetrofitError e) {
                             System.out.println(e.getResponse().getStatus());
                         }
+                        break;
+                    case 2:
+                        service.getMalls(new Callback<List<Place>>() {
+                                    @Override
+                                    public void success(List<Place> malls, Response response) {
+                                        if (malls.isEmpty()) {
+                                            Toast.makeText(getApplicationContext(), "Không tìm thấy địa điểm", Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Intent i = new Intent(getApplicationContext(), MallsListActivity.class);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putParcelable("malls", Parcels.wrap(malls));
+                                            i.putExtras(bundle);
+                                            startActivity(i);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void failure(RetrofitError error) {}
+                                });
                         break;
                 }
             }

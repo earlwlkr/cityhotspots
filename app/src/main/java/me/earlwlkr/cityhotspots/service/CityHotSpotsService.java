@@ -6,6 +6,7 @@ import me.earlwlkr.cityhotspots.models.Cinema;
 import me.earlwlkr.cityhotspots.models.CinemaOptions;
 import me.earlwlkr.cityhotspots.models.Diner;
 import me.earlwlkr.cityhotspots.models.DinerOptions;
+import me.earlwlkr.cityhotspots.models.Place;
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Query;
@@ -37,4 +38,7 @@ public interface CityHotSpotsService {
 
     @GET("/cinemas")
     void getCinemas(@Query("trademark") String trademark, Callback<List<Cinema>> cinemas);
+
+    @GET("/malls")
+    void getMalls(Callback<List<Place>> cinemas);
 }
