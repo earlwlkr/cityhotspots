@@ -7,6 +7,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -110,15 +111,26 @@ public class MallsMapFragment extends Fragment implements GoogleMap.OnMarkerClic
             ArrayList<LatLng> positions = new ArrayList<LatLng>();
             for (Place mall: malls[0])
             {
-                String address = mall.getAddress().getStreetAddress() + " " + mall.getAddress().getDistrict()
-                        + " " + mall.getAddress().getCity();
-                LatLng dinerLatlng = getLocationFromAddress(address);
-                if (dinerLatlng != null) {
-                    mall.setPosition(dinerLatlng);
-                    positions.add(dinerLatlng);
+                me.earlwlkr.cityhotspots.models.Address addr = mall.getAddress();
+                String address = addr.getStreetAddress() + " " + addr.getDistrict()
+                        + " " + addr.getCity();
+                LatLng pos = getLocationFromAddress(address);
+                if (pos != null) {
+                    mall.setPosition(pos);
+                    positions.add(pos);
+                    SystemClock.sleep(100);
                 } else {
-                    System.out.println(address);
-                    System.out.println(++count);
+                    // Handle Google API rate limit
+                    SystemClock.sleep(100);
+                    address = addr.getStreetAddress() + " " + addr.getDistrict();
+                    pos = getLocationFromAddress(address);
+                    if (pos != null) {
+                        mall.setPosition(pos);
+                        positions.add(pos);
+                    } else {
+                        System.out.println(address);
+                        System.out.println(++count);
+                    }
                 }
             }
             return malls[0];

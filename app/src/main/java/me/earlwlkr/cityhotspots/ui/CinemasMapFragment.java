@@ -7,6 +7,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -108,16 +109,29 @@ public class CinemasMapFragment extends Fragment {
             ArrayList<LatLng> positions = new ArrayList<LatLng>();
             for (Cinema cinema: cinemas[0])
             {
-                String address = cinema.getAddress().getStreetAddress() + " " + cinema.getAddress().getDistrict()
-                        + " " + cinema.getAddress().getCity();
+                me.earlwlkr.cityhotspots.models.Address addr = cinema.getAddress();
+                String address = addr.getStreetAddress() + " " + addr.getDistrict()
+                        + " " + addr.getCity();
                 LatLng pos = getLocationFromAddress(address);
                 if (pos != null) {
                     cinema.setPosition(pos);
                     positions.add(pos);
+                    SystemClock.sleep(50);
                 } else {
-                    System.out.println(address);
-                    System.out.println(++count);
+                    // Handle Google API rate limit
+                    SystemClock.sleep(50);
+                    address = addr.getStreetAddress() + " " + addr.getDistrict();
+                    pos = getLocationFromAddress(address);
+                    if (pos != null) {
+                        cinema.setPosition(pos);
+                        positions.add(pos);
+                    } else {
+                        System.out.println(address);
+                        System.out.println(++count);
+                    }
                 }
+                // Handle Google API rate limit
+                SystemClock.sleep(200);
             }
             return cinemas[0];
         }

@@ -7,6 +7,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -110,16 +111,29 @@ public class DinersMapFragment extends Fragment implements GoogleMap.OnMarkerCli
             ArrayList<LatLng> positions = new ArrayList<LatLng>();
             for (Diner diner: diners[0])
             {
-                String address = diner.getAddress().getStreetAddress() + " " + diner.getAddress().getDistrict()
-                        + " " + diner.getAddress().getCity();
-                LatLng dinerLatlng = getLocationFromAddress(address);
-                if (dinerLatlng != null) {
-                    diner.setPosition(dinerLatlng);
-                    positions.add(dinerLatlng);
+                me.earlwlkr.cityhotspots.models.Address addr = diner.getAddress();
+                String address = addr.getStreetAddress() + " " + addr.getDistrict()
+                        + " " + addr.getCity();
+                LatLng pos = getLocationFromAddress(address);
+                if (pos != null) {
+                    diner.setPosition(pos);
+                    positions.add(pos);
+                    SystemClock.sleep(100);
                 } else {
-                    System.out.println(address);
-                    System.out.println(++count);
+                    // Handle Google API rate limit
+                    SystemClock.sleep(100);
+                    address = addr.getStreetAddress() + " " + addr.getDistrict();
+                    pos = getLocationFromAddress(address);
+                    if (pos != null) {
+                        diner.setPosition(pos);
+                        positions.add(pos);
+                    } else {
+                        System.out.println(address);
+                        System.out.println(++count);
+                    }
                 }
+                // Handle Google API rate limit
+                SystemClock.sleep(200);
             }
             return diners[0];
         }
