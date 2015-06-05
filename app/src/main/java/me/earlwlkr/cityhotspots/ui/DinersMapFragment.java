@@ -118,10 +118,10 @@ public class DinersMapFragment extends Fragment implements GoogleMap.OnMarkerCli
                 if (pos != null) {
                     diner.setPosition(pos);
                     positions.add(pos);
-                    SystemClock.sleep(100);
+                    SystemClock.sleep(20);
                 } else {
                     // Handle Google API rate limit
-                    SystemClock.sleep(100);
+                    SystemClock.sleep(20);
                     address = addr.getStreetAddress() + " " + addr.getDistrict();
                     pos = getLocationFromAddress(address);
                     if (pos != null) {

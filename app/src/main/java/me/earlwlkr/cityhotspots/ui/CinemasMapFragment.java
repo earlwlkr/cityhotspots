@@ -116,10 +116,10 @@ public class CinemasMapFragment extends Fragment {
                 if (pos != null) {
                     cinema.setPosition(pos);
                     positions.add(pos);
-                    SystemClock.sleep(50);
+                    SystemClock.sleep(20);
                 } else {
                     // Handle Google API rate limit
-                    SystemClock.sleep(50);
+                    SystemClock.sleep(20);
                     address = addr.getStreetAddress() + " " + addr.getDistrict();
                     pos = getLocationFromAddress(address);
                     if (pos != null) {

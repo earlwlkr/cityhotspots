@@ -118,10 +118,10 @@ public class MallsMapFragment extends Fragment implements GoogleMap.OnMarkerClic
                 if (pos != null) {
                     mall.setPosition(pos);
                     positions.add(pos);
-                    SystemClock.sleep(100);
+                    SystemClock.sleep(20);
                 } else {
                     // Handle Google API rate limit
-                    SystemClock.sleep(100);
+                    SystemClock.sleep(20);
                     address = addr.getStreetAddress() + " " + addr.getDistrict();
                     pos = getLocationFromAddress(address);
                     if (pos != null) {
