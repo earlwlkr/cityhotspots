@@ -48,6 +48,7 @@ public class DinerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         TextView txtCuisine = (TextView) v.findViewById(R.id.txt_cuisine);
         TextView txtPriceRange = (TextView) v.findViewById(R.id.txt_price_range);
+        TextView txtOpenTime = (TextView) v.findViewById(R.id.txt_open_time);
 
         for (Diner diner: mDiners) {
             LatLng dinerPos = diner.getPosition();
@@ -58,6 +59,7 @@ public class DinerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                 txtAddress.setText(diner.getAddress().getAddressString());
                 txtCuisine.setText(diner.getCuisine());
                 txtPriceRange.setText(diner.getPriceMin() + " - " + diner.getPriceMax());
+                txtOpenTime.setText(diner.getOpenTime().getHours() + "h - " + diner.getCloseTime().getHours() + "h");
             }
         }
 
