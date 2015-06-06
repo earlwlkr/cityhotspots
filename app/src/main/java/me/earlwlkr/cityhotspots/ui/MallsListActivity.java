@@ -45,7 +45,7 @@ public class MallsListActivity extends FragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_diners_list, menu);
+        getMenuInflater().inflate(R.menu.menu_results_list, menu);
         return true;
     }
 
