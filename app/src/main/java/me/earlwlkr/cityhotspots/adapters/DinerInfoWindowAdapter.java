@@ -58,10 +58,10 @@ public class DinerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                     Math.abs(dinerPos.longitude - latLng.longitude) < 0.000001) {
 
                 txtName.setText(diner.getName());
-                if (diner.getRating() != "--") {
+                try {
                     float rating = Float.parseFloat(diner.getRating()) / 2.0f;
                     dinerRating.setRating(rating);
-                } else {
+                } catch (NumberFormatException e) {
                     dinerRating.setVisibility(View.INVISIBLE);
                 }
                 txtAddress.setText(diner.getAddress().getAddressString());

@@ -106,7 +106,6 @@ public class MallsMapFragment extends Fragment implements GoogleMap.OnMarkerClic
             ShowMarkers task = new ShowMarkers();
             task.execute(mall);
         }
-        Toast.makeText(getActivity(), "Đã xử lý xong bản đồ", Toast.LENGTH_LONG);
         return v;
     }
 

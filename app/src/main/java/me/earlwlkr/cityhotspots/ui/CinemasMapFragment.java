@@ -106,7 +106,6 @@ public class CinemasMapFragment extends Fragment implements GoogleMap.OnMarkerCl
             ShowMarkers task = new ShowMarkers();
             task.execute(cinema);
         }
-        Toast.makeText(getActivity(), "Đã xử lý xong bản đồ", Toast.LENGTH_LONG);
         return v;
     }
 

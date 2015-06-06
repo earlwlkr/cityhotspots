@@ -109,8 +109,6 @@ public class DinersMapFragment extends Fragment implements GoogleMap.OnMarkerCli
             ShowMarkers task = new ShowMarkers();
             task.execute(diner);
         }
-        Toast.makeText(getActivity(), "Đã xử lý xong bản đồ", Toast.LENGTH_LONG);
-
         return v;
     }
 
