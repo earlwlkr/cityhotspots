@@ -58,7 +58,7 @@ public class DinerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                 txtName.setText(diner.getName());
                 txtAddress.setText(diner.getAddress().getAddressString());
                 txtCuisine.setText(diner.getCuisine());
-                txtPriceRange.setText(diner.getPriceMin() + " - " + diner.getPriceMax());
+                txtPriceRange.setText(diner.getPriceMin() + "đ - " + diner.getPriceMax() + "đ");
                 txtOpenTime.setText(diner.getOpenTime().getHours() + "h - " + diner.getCloseTime().getHours() + "h");
             }
         }

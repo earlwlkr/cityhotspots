@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -105,6 +106,7 @@ public class CinemasMapFragment extends Fragment implements GoogleMap.OnMarkerCl
             ShowMarkers task = new ShowMarkers();
             task.execute(cinema);
         }
+        Toast.makeText(getActivity(), "Đã xử lý xong bản đồ", Toast.LENGTH_LONG);
         return v;
     }
 
