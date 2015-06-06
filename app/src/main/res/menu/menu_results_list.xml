@@ -6,5 +6,7 @@
         android:title="@string/action_map"
         android:orderInCategory="100"
         android:icon="@drawable/ic_action_map"
-        app:showAsAction="ifRoom" />
+        android:showAsAction="always"
+        app:showAsAction="always"
+        />
 </menu>
