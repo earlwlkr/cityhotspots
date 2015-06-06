@@ -26,7 +26,7 @@ public class DinersListActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_diners_list);
+        setContentView(R.layout.activity_results_list);
         Bundle bundle = this.getIntent().getExtras();
         if (bundle == null) {
             bundle = savedInstanceState;
@@ -36,7 +36,7 @@ public class DinersListActivity extends FragmentActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_diners_list, DinersListFragment.createInstance(mDinersList))
+                    .add(R.id.fragment_results_list, DinersListFragment.createInstance(mDinersList))
                     .commit();
         }
     }

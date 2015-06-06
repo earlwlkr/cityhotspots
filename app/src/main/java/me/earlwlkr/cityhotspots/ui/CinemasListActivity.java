@@ -26,7 +26,7 @@ public class CinemasListActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cinemas_list);
+        setContentView(R.layout.activity_results_list);
         Bundle bundle = this.getIntent().getExtras();
         if (bundle == null) {
             bundle = savedInstanceState;
@@ -36,7 +36,7 @@ public class CinemasListActivity extends FragmentActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_cinemas_list, CinemasListFragment.createInstance(mCinemasList))
+                    .add(R.id.fragment_results_list, CinemasListFragment.createInstance(mCinemasList))
                     .commit();
         }
     }

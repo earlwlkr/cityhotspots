@@ -34,11 +34,11 @@ public class MallsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_malls_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_results_list, container, false);
         List<Place> malls = Parcels.unwrap(getArguments().getParcelable("malls"));
         System.out.println("Size: " + malls.size());
 
-        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.malls_list);
+        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.results_list);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView

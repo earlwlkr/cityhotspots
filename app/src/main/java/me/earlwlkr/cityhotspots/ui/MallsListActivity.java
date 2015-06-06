@@ -26,7 +26,7 @@ public class MallsListActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_malls_list);
+        setContentView(R.layout.activity_results_list);
         Bundle bundle = this.getIntent().getExtras();
         if (bundle == null) {
             bundle = savedInstanceState;
@@ -36,7 +36,7 @@ public class MallsListActivity extends FragmentActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_malls_list, MallsListFragment.createInstance(mMallsList))
+                    .add(R.id.fragment_results_list, MallsListFragment.createInstance(mMallsList))
                     .commit();
         }
     }
