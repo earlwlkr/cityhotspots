@@ -1,8 +1,6 @@
-package me.earlwlkr.cityhotspots.ui;
+package me.earlwlkr.cityhotspots.ui.diner;
 
 import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -13,7 +11,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,20 +22,19 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.parceler.Parcels;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import me.earlwlkr.cityhotspots.R;
-import me.earlwlkr.cityhotspots.models.Cinema;
+import me.earlwlkr.cityhotspots.adapters.DinerInfoWindowAdapter;
+import me.earlwlkr.cityhotspots.models.Diner;
 import me.earlwlkr.cityhotspots.service.ShortestRouteFinder;
 import me.earlwlkr.cityhotspots.utils.Utils;
 
 /**
  * Show list of places on map for user to pick.
  */
-public class CinemasMapFragment extends Fragment implements GoogleMap.OnMarkerClickListener {
+public class DinersMapFragment extends Fragment implements GoogleMap.OnMarkerClickListener {
 
     MapView mapView;
     GoogleMap mMap;
@@ -65,15 +61,15 @@ public class CinemasMapFragment extends Fragment implements GoogleMap.OnMarkerCl
         public void onProviderDisabled(String provider) {}
     };
 
-    public static CinemasMapFragment createInstance(List<Cinema> cinemas) {
-        CinemasMapFragment fragment = new CinemasMapFragment();
+    public static DinersMapFragment createInstance(List<Diner> diners) {
+        DinersMapFragment fragment = new DinersMapFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("cinemas", Parcels.wrap(cinemas));
+        bundle.putParcelable("diners", Parcels.wrap(diners));
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    public CinemasMapFragment() {}
+    public DinersMapFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,32 +91,34 @@ public class CinemasMapFragment extends Fragment implements GoogleMap.OnMarkerCl
         MapsInitializer.initialize(this.getActivity());
         mMap.setOnMarkerClickListener(this);
 
+
         // Updates the location and zoom of the MapView
         if (mLastLocation != null) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastLocation.getLatitude(),
                     mLastLocation.getLongitude()), 17));
         }
         mRouteFinder = new ShortestRouteFinder(mMap);
-        List<Cinema> cinemas = Parcels.unwrap(getArguments().getParcelable("cinemas"));
-        for (Cinema cinema: cinemas) {
+        List<Diner> diners = Parcels.unwrap(getArguments().getParcelable("diners"));
+        mMap.setInfoWindowAdapter(new DinerInfoWindowAdapter(getActivity(), diners));
+        for (Diner diner: diners) {
             ShowMarkers task = new ShowMarkers();
-            task.execute(cinema);
+            task.execute(diner);
         }
         return v;
     }
 
-    private class ShowMarkers extends AsyncTask<Cinema, Void, Cinema> {
+    private class ShowMarkers extends AsyncTask<Diner, Void, Diner> {
         @Override
-        protected Cinema doInBackground(Cinema... cinemas) {
+        protected Diner doInBackground(Diner... diners) {
             int count = 0;
             ArrayList<LatLng> positions = new ArrayList<LatLng>();
-            Cinema cinema = cinemas[0];
-            me.earlwlkr.cityhotspots.models.Address addr = cinema.getAddress();
+            Diner diner = diners[0];
+            me.earlwlkr.cityhotspots.models.Address addr = diner.getAddress();
             String address = addr.getStreetAddress() + " " + addr.getDistrict()
                     + " " + addr.getCity();
             LatLng pos = Utils.getLocationFromAddress(getActivity(), address);
             if (pos != null) {
-                cinema.setPosition(pos);
+                diner.setPosition(pos);
                 positions.add(pos);
                 SystemClock.sleep(20);
             } else {
@@ -129,23 +127,22 @@ public class CinemasMapFragment extends Fragment implements GoogleMap.OnMarkerCl
                 address = addr.getStreetAddress() + " " + addr.getDistrict();
                 pos = Utils.getLocationFromAddress(getActivity(), address);
                 if (pos != null) {
-                    cinema.setPosition(pos);
+                    diner.setPosition(pos);
                     positions.add(pos);
                 } else {
                     System.out.println(address);
                     System.out.println(++count);
                 }
             }
-            return cinema;
+            return diner;
         }
 
         @Override
-        protected void onPostExecute(Cinema cinema) {
-            super.onPostExecute(cinema);
-            LatLng pos = cinema.getPosition();
+        protected void onPostExecute(Diner diner) {
+            super.onPostExecute(diner);
+            LatLng pos = diner.getPosition();
             if (pos != null) {
-                mMap.addMarker(new MarkerOptions().position(pos)
-                        .title(cinema.getName()).snippet(cinema.getAddress().getAddressString()));
+                mMap.addMarker(new MarkerOptions().position(pos).title(diner.getName()));
             }
         }
     }

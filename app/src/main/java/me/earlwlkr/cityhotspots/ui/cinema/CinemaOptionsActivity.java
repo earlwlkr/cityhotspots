@@ -1,10 +1,9 @@
-package me.earlwlkr.cityhotspots.ui;
+package me.earlwlkr.cityhotspots.ui.cinema;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -15,12 +14,11 @@ import com.dd.CircularProgressButton;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import me.earlwlkr.cityhotspots.models.Cinema;
+import me.earlwlkr.cityhotspots.models.CinemaOptions;
 import me.earlwlkr.cityhotspots.service.CityHotSpotsService;
-import me.earlwlkr.cityhotspots.models.Diner;
-import me.earlwlkr.cityhotspots.models.DinerOptions;
 import me.earlwlkr.cityhotspots.R;
 import me.earlwlkr.cityhotspots.service.RestClient;
 import retrofit.Callback;
@@ -28,16 +26,12 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class DinerOptionsActivity extends Activity implements View.OnClickListener {
+public class CinemaOptionsActivity extends Activity implements View.OnClickListener {
 
-    private Spinner mSpinnerCuisine;
-    private Spinner mSpinnerCategory;
-    private Spinner mSpinnerDistrict;
-    private Spinner mSpinnerTime;
-    private RangeSeekBar<Integer> mPriceRange;
+    private Spinner mSpinnerTrademark;
     private CircularProgressButton mBtnSearch;
     private CityHotSpotsService mService;
-    private DinerOptions mOptions;
+    private CinemaOptions mOptions;
 
     private void setSpinnerData(Spinner spinner, List<String> data) {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
@@ -49,29 +43,8 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
         spinner.setAdapter(dataAdapter);
     }
 
-    private void setPriceRangeSliderData(int min, int max) {
-        mPriceRange.setRangeValues(min, max);
-        mPriceRange.setSelectedMinValue(min);
-        mPriceRange.setSelectedMaxValue(max);
-    }
-
-    private void fetchOptions(DinerOptions options) {
-        setSpinnerData(mSpinnerCuisine, options.getCuisines());
-        setSpinnerData(mSpinnerCategory, options.getCategories());
-        setSpinnerData(mSpinnerDistrict, options.getDistricts());
-        List<String> data = new ArrayList<String>();
-        data.add("Tất cả");
-        for (int i = 0; i < 24; i++) {
-            data.add(Integer.toString(i));
-        }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
-                getApplicationContext(),
-                R.layout.spinner_item,
-                data);
-        dataAdapter.setDropDownViewResource(
-                R.layout.spinner_dropdown_item);
-        mSpinnerTime.setAdapter(dataAdapter);
-        setPriceRangeSliderData(options.getPriceMin(), options.getPriceMax());
+    private void fetchOptions(CinemaOptions options) {
+        setSpinnerData(mSpinnerTrademark, options.getTrademarks());
     }
 
     @Override
@@ -89,16 +62,12 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_diner_options);
+        setContentView(R.layout.activity_cinema_options);
 
         // Back button on ActionBar
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mSpinnerCuisine = (Spinner) findViewById(R.id.spinner_option_diner_cuisine);
-        mSpinnerCategory = (Spinner) findViewById(R.id.spinner_option_diner_category);
-        mSpinnerDistrict = (Spinner) findViewById(R.id.spinner_option_diner_district);
-        mSpinnerTime = (Spinner) findViewById(R.id.spinner_option_diner_time);
-        mPriceRange = (RangeSeekBar<Integer>) findViewById(R.id.price_range);
+        mSpinnerTrademark = (Spinner) findViewById(R.id.spinner_option_cinema_trademark);
         mBtnSearch = (CircularProgressButton) findViewById(R.id.btn_search);
         mBtnSearch.setIndeterminateProgressMode(true);
         mBtnSearch.setOnClickListener(this);
@@ -122,31 +91,19 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
     public void onClick(View v) {
         // Set button loading state
         mBtnSearch.setProgress(50);
-        String
-                cuisine = mSpinnerCuisine.getSelectedItem().toString(),
-                category = mSpinnerCategory.getSelectedItem().toString(),
-                district = mSpinnerDistrict.getSelectedItem().toString(),
-                time = mSpinnerTime.getSelectedItem().toString();
+        String trademark = mSpinnerTrademark.getSelectedItem().toString();
 
-        String price_min = mPriceRange.getSelectedMinValue().toString();
-        String price_max = mPriceRange.getSelectedMaxValue().toString();
-
-        if (time == "Tất cả") {
-            time = null;
-        }
-
-        mService.getDiners(cuisine, district, category,
-                price_min, price_max, time,
-                new Callback<List<Diner>>() {
+        mService.getCinemas(trademark,
+                new Callback<List<Cinema>>() {
                     @Override
-                    public void success(List<Diner> diners, Response response) {
+                    public void success(List<Cinema> cinemas, Response response) {
                         mBtnSearch.setProgress(0);
-                        if (diners.isEmpty()) {
+                        if (cinemas.isEmpty()) {
                             Toast.makeText(getApplicationContext(), "Không tìm thấy địa điểm", Toast.LENGTH_LONG).show();
                         } else {
-                            Intent i = new Intent(getApplicationContext(), DinersListActivity.class);
+                            Intent i = new Intent(getApplicationContext(), CinemasListActivity.class);
                             Bundle bundle = new Bundle();
-                            bundle.putParcelable("diners", Parcels.wrap(diners));
+                            bundle.putParcelable("cinemas", Parcels.wrap(cinemas));
                             i.putExtras(bundle);
                             startActivity(i);
                         }

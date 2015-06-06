@@ -1,4 +1,4 @@
-package me.earlwlkr.cityhotspots.ui;
+package me.earlwlkr.cityhotspots.ui.mall;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;

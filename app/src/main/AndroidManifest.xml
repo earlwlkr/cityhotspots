@@ -31,7 +31,7 @@
             android:value="@string/geo_api_key" />
 
         <activity
-            android:name=".ui.DinerOptionsActivity"
+            android:name=".ui.diner.DinerOptionsActivity"
             android:label="@string/title_activity_diner_options"
             android:launchMode="singleTop" >
             <meta-data
@@ -39,25 +39,25 @@
                 android:value=".ui.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.DinersListActivity"
+            android:name=".ui.diner.DinersListActivity"
             android:label="@string/title_activity_diners_list"
             android:launchMode="singleTop"
-            android:parentActivityName=".ui.DinerOptionsActivity" >
+            android:parentActivityName=".ui.diner.DinerOptionsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.earlwlkr.cityhotspots.ui.DinerOptionsActivity" />
+                android:value=".ui.diner.DinerOptionsActivity" />
         </activity>
         <activity
-            android:name=".ui.DinersMapActivity"
+            android:name=".ui.diner.DinersMapActivity"
             android:label="@string/title_activity_map_view"
             android:launchMode="singleTop"
-            android:parentActivityName=".ui.DinersListActivity" >
+            android:parentActivityName=".ui.diner.DinersListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.earlwlkr.cityhotspots.ui.DinersListActivity" />
+                android:value=".ui.diner.DinersListActivity" />
         </activity>
         <activity
-            android:name=".ui.CinemaOptionsActivity"
+            android:name=".ui.cinema.CinemaOptionsActivity"
             android:label="@string/title_activity_cinema_options"
             android:launchMode="singleTop"
             android:parentActivityName=".ui.MainActivity" >
@@ -66,24 +66,24 @@
                 android:value="me.earlwlkr.cityhotspots.ui.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.CinemasListActivity"
+            android:name=".ui.cinema.CinemasListActivity"
             android:label="@string/title_activity_cinemas_list"
             android:launchMode="singleTop"
-            android:parentActivityName=".ui.CinemaOptionsActivity" >
+            android:parentActivityName=".ui.cinema.CinemaOptionsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.earlwlkr.cityhotspots.ui.CinemaOptionsActivity" />
+                android:value=".ui.cinema.CinemaOptionsActivity" />
         </activity>
         <activity
-            android:name=".ui.CinemasMapActivity"
+            android:name=".ui.cinema.CinemasMapActivity"
             android:label="@string/title_activity_cinemas_map"
-            android:parentActivityName=".ui.CinemasListActivity" >
+            android:parentActivityName=".ui.cinema.CinemasListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.earlwlkr.cityhotspots.ui.CinemasListActivity" />
+                android:value=".ui.cinema.CinemasListActivity" />
         </activity>
         <activity
-            android:name=".ui.MallsListActivity"
+            android:name=".ui.mall.MallsListActivity"
             android:label="@string/title_activity_malls_list"
             android:launchMode="singleTop"
             android:parentActivityName=".ui.MainActivity" >
@@ -92,12 +92,12 @@
                 android:value="me.earlwlkr.cityhotspots.ui.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.MallsMapActivity"
+            android:name=".ui.mall.MallsMapActivity"
             android:label="@string/title_activity_malls_map"
-            android:parentActivityName=".ui.MallsListActivity" >
+            android:parentActivityName=".ui.mall.MallsListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.earlwlkr.cityhotspots.ui.MallsListActivity" />
+                android:value=".ui.mall.MallsListActivity" />
         </activity>
     </application>
 

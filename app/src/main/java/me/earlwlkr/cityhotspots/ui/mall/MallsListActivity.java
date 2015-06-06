@@ -1,4 +1,4 @@
-package me.earlwlkr.cityhotspots.ui;
+package me.earlwlkr.cityhotspots.ui.mall;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
@@ -12,14 +12,14 @@ import org.parceler.Parcels;
 import java.util.List;
 
 import me.earlwlkr.cityhotspots.R;
-import me.earlwlkr.cityhotspots.models.Cinema;
+import me.earlwlkr.cityhotspots.models.Place;
 
-public class CinemasListActivity extends FragmentActivity {
-    private List<Cinema> mCinemasList;
+public class MallsListActivity extends FragmentActivity {
+    private List<Place> mMallsList;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable("cinemas", Parcels.wrap(mCinemasList));
+        outState.putParcelable("malls", Parcels.wrap(mMallsList));
         super.onSaveInstanceState(outState);
     }
 
@@ -31,12 +31,12 @@ public class CinemasListActivity extends FragmentActivity {
         if (bundle == null) {
             bundle = savedInstanceState;
         }
-        mCinemasList = Parcels.unwrap(bundle.getParcelable("cinemas"));
+        mMallsList = Parcels.unwrap(bundle.getParcelable("malls"));
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_results_list, CinemasListFragment.createInstance(mCinemasList))
+                    .add(R.id.fragment_results_list, MallsListFragment.createInstance(mMallsList))
                     .commit();
         }
     }
@@ -59,9 +59,9 @@ public class CinemasListActivity extends FragmentActivity {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.map:
-                Intent i = new Intent(getApplicationContext(), CinemasMapActivity.class);
+                Intent i = new Intent(getApplicationContext(), MallsMapActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("cinemas", Parcels.wrap(mCinemasList));
+                bundle.putParcelable("malls", Parcels.wrap(mMallsList));
                 i.putExtras(bundle);
                 startActivity(i);
                 return true;

@@ -1,4 +1,4 @@
-package me.earlwlkr.cityhotspots.ui;
+package me.earlwlkr.cityhotspots.ui.cinema;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
@@ -12,14 +12,14 @@ import org.parceler.Parcels;
 import java.util.List;
 
 import me.earlwlkr.cityhotspots.R;
-import me.earlwlkr.cityhotspots.models.Diner;
+import me.earlwlkr.cityhotspots.models.Cinema;
 
-public class DinersListActivity extends FragmentActivity {
-    private List<Diner> mDinersList;
+public class CinemasListActivity extends FragmentActivity {
+    private List<Cinema> mCinemasList;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable("diners", Parcels.wrap(mDinersList));
+        outState.putParcelable("cinemas", Parcels.wrap(mCinemasList));
         super.onSaveInstanceState(outState);
     }
 
@@ -31,12 +31,12 @@ public class DinersListActivity extends FragmentActivity {
         if (bundle == null) {
             bundle = savedInstanceState;
         }
-        mDinersList = Parcels.unwrap(bundle.getParcelable("diners"));
+        mCinemasList = Parcels.unwrap(bundle.getParcelable("cinemas"));
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_results_list, DinersListFragment.createInstance(mDinersList))
+                    .add(R.id.fragment_results_list, CinemasListFragment.createInstance(mCinemasList))
                     .commit();
         }
     }
@@ -59,9 +59,9 @@ public class DinersListActivity extends FragmentActivity {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.map:
-                Intent i = new Intent(getApplicationContext(), DinersMapActivity.class);
+                Intent i = new Intent(getApplicationContext(), CinemasMapActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("diners", Parcels.wrap(mDinersList));
+                bundle.putParcelable("cinemas", Parcels.wrap(mCinemasList));
                 i.putExtras(bundle);
                 startActivity(i);
                 return true;

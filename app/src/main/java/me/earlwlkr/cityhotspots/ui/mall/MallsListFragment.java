@@ -1,4 +1,4 @@
-package me.earlwlkr.cityhotspots.ui;
+package me.earlwlkr.cityhotspots.ui.mall;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -14,29 +14,29 @@ import java.util.List;
 
 import me.earlwlkr.cityhotspots.R;
 import me.earlwlkr.cityhotspots.adapters.MapItemListAdapter;
-import me.earlwlkr.cityhotspots.models.Diner;
+import me.earlwlkr.cityhotspots.models.Place;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class DinersListFragment extends Fragment {
+public class MallsListFragment extends Fragment {
 
-    public static DinersListFragment createInstance(List<Diner> diners) {
-        DinersListFragment fragment = new DinersListFragment();
+    public static MallsListFragment createInstance(List<Place> malls) {
+        MallsListFragment fragment = new MallsListFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("diners", Parcels.wrap(diners));
+        bundle.putParcelable("malls", Parcels.wrap(malls));
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    public DinersListFragment() {}
+    public MallsListFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_results_list, container, false);
-        List<Diner> diners = Parcels.unwrap(getArguments().getParcelable("diners"));
-        System.out.println("Size: " + diners.size());
+        List<Place> malls = Parcels.unwrap(getArguments().getParcelable("malls"));
+        System.out.println("Size: " + malls.size());
 
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.results_list);
 
@@ -49,7 +49,7 @@ public class DinersListFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        MapItemListAdapter mAdapter = new MapItemListAdapter(diners);
+        MapItemListAdapter mAdapter = new MapItemListAdapter(malls);
         mRecyclerView.setAdapter(mAdapter);
         return view;
     }
