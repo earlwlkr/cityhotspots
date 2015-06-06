@@ -11,11 +11,22 @@
         android:textSize="@dimen/font_normal"
         />
 
+    <RatingBar
+        android:id="@+id/diner_rating"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1.0"
+        android:rating="3.0"
+        android:layout_below="@id/txt_name"
+        />
+
     <TextView
         android:id="@+id/txt_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txt_name"
+        android:layout_below="@id/diner_rating"
         android:textSize="@dimen/font_small"
         android:textColor="@color/gray"
         />

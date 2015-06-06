@@ -32,6 +32,8 @@ public class Diner extends Place {
     @SerializedName("close_time")
     private Date closeTime;
 
+    private String rating;
+
     public int getFoodyId() {
         return foodyId;
     }
@@ -86,5 +88,13 @@ public class Diner extends Place {
 
     public void setOpenTime(Date openTime) {
         this.openTime = openTime;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 }

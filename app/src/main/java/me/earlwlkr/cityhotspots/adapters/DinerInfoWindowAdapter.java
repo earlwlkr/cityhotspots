@@ -3,6 +3,7 @@ package me.earlwlkr.cityhotspots.adapters;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -49,6 +50,7 @@ public class DinerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         TextView txtCuisine = (TextView) v.findViewById(R.id.txt_cuisine);
         TextView txtPriceRange = (TextView) v.findViewById(R.id.txt_price_range);
         TextView txtOpenTime = (TextView) v.findViewById(R.id.txt_open_time);
+        RatingBar dinerRating = (RatingBar) v.findViewById(R.id.diner_rating);
 
         for (Diner diner: mDiners) {
             LatLng dinerPos = diner.getPosition();
@@ -56,6 +58,12 @@ public class DinerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                     dinerPos.longitude - latLng.longitude < 0.00001) {
 
                 txtName.setText(diner.getName());
+                if (diner.getRating() != "--") {
+                    float rating = Float.parseFloat(diner.getRating()) / 2.0f;
+                    dinerRating.setRating(rating);
+                } else {
+                    dinerRating.setVisibility(View.INVISIBLE);
+                }
                 txtAddress.setText(diner.getAddress().getAddressString());
                 txtCuisine.setText(diner.getCuisine());
                 txtPriceRange.setText(diner.getPriceMin() + "đ - " + diner.getPriceMax() + "đ");
