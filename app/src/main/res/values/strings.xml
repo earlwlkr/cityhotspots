@@ -13,6 +13,7 @@
     <string name="option_diner_category">Category:</string>
     <string name="option_diner_district">District:</string>
     <string name="option_diner_price_range">Price range:</string>
+    <string name="option_diner_time">Time of arrival:</string>
 
     <string name="search">Search</string>
     <string name="error">Error</string>

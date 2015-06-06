@@ -15,6 +15,7 @@ import com.dd.CircularProgressButton;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import me.earlwlkr.cityhotspots.service.CityHotSpotsService;
@@ -32,6 +33,7 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
     private Spinner mSpinnerCuisine;
     private Spinner mSpinnerCategory;
     private Spinner mSpinnerDistrict;
+    private Spinner mSpinnerTime;
     private RangeSeekBar<Integer> mPriceRange;
     private CircularProgressButton mBtnSearch;
     private CityHotSpotsService mService;
@@ -57,6 +59,18 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
         setSpinnerData(mSpinnerCuisine, options.getCuisines());
         setSpinnerData(mSpinnerCategory, options.getCategories());
         setSpinnerData(mSpinnerDistrict, options.getDistricts());
+        List<String> data = new ArrayList<String>();
+        data.add("Tất cả");
+        for (int i = 0; i < 24; i++) {
+            data.add(Integer.toString(i));
+        }
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
+                getApplicationContext(),
+                R.layout.spinner_item,
+                data);
+        dataAdapter.setDropDownViewResource(
+                R.layout.spinner_dropdown_item);
+        mSpinnerTime.setAdapter(dataAdapter);
         setPriceRangeSliderData(options.getPriceMin(), options.getPriceMax());
     }
 
@@ -83,6 +97,7 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
         mSpinnerCuisine = (Spinner) findViewById(R.id.spinner_option_diner_cuisine);
         mSpinnerCategory = (Spinner) findViewById(R.id.spinner_option_diner_category);
         mSpinnerDistrict = (Spinner) findViewById(R.id.spinner_option_diner_district);
+        mSpinnerTime = (Spinner) findViewById(R.id.spinner_option_diner_time);
         mPriceRange = (RangeSeekBar<Integer>) findViewById(R.id.price_range);
         mBtnSearch = (CircularProgressButton) findViewById(R.id.btn_search);
         mBtnSearch.setIndeterminateProgressMode(true);
@@ -110,14 +125,18 @@ public class DinerOptionsActivity extends Activity implements View.OnClickListen
         String
                 cuisine = mSpinnerCuisine.getSelectedItem().toString(),
                 category = mSpinnerCategory.getSelectedItem().toString(),
-                district = mSpinnerDistrict.getSelectedItem().toString();
+                district = mSpinnerDistrict.getSelectedItem().toString(),
+                time = mSpinnerTime.getSelectedItem().toString();
 
         String price_min = mPriceRange.getSelectedMinValue().toString();
         String price_max = mPriceRange.getSelectedMaxValue().toString();
 
+        if (time == "Tất cả") {
+            time = null;
+        }
+
         mService.getDiners(cuisine, district, category,
-                price_min, price_max,
-                "6",
+                price_min, price_max, time,
                 new Callback<List<Diner>>() {
                     @Override
                     public void success(List<Diner> diners, Response response) {

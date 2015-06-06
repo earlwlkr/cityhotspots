@@ -10,6 +10,7 @@
     <string name="option_diner_category">Danh mục:</string>
     <string name="option_diner_district">Khu vực:</string>
     <string name="option_diner_price_range">Khoảng giá:</string>
+    <string name="option_diner_time">Giờ đến:</string>
 
     <string name="search">Tìm</string>
     <string name="error">Lỗi</string>

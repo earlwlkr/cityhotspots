@@ -60,8 +60,23 @@
                 />
 
             <TextView
-                android:id="@+id/txt_option_diner_price_range"
+                android:id="@+id/txt_option_diner_time"
                 android:layout_below="@id/txt_option_diner_district"
+                android:text="@string/option_diner_time"
+                style="@style/OptionName"
+                />
+
+            <Spinner
+                android:id="@+id/spinner_option_diner_time"
+                android:layout_alignBaseline="@id/txt_option_diner_time"
+                android:layout_toEndOf="@id/txt_option_diner_time"
+                android:layout_toRightOf="@id/txt_option_diner_time"
+                style="@style/OptionValue"
+                />
+
+            <TextView
+                android:id="@+id/txt_option_diner_price_range"
+                android:layout_below="@id/txt_option_diner_time"
                 android:text="@string/option_diner_price_range"
                 style="@style/OptionName"
                 />
