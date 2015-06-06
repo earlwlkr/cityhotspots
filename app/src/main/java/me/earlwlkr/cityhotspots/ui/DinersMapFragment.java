@@ -30,8 +30,10 @@ import java.util.List;
 import java.util.Locale;
 
 import me.earlwlkr.cityhotspots.R;
+import me.earlwlkr.cityhotspots.adapters.DinerInfoWindowAdapter;
 import me.earlwlkr.cityhotspots.models.Diner;
 import me.earlwlkr.cityhotspots.service.ShortestRouteFinder;
+import me.earlwlkr.cityhotspots.utils.Utils;
 
 /**
  * Show list of places on map for user to pick.
@@ -93,6 +95,7 @@ public class DinersMapFragment extends Fragment implements GoogleMap.OnMarkerCli
         MapsInitializer.initialize(this.getActivity());
         mMap.setOnMarkerClickListener(this);
 
+
         // Updates the location and zoom of the MapView
         if (mLastLocation != null) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastLocation.getLatitude(),
@@ -101,6 +104,7 @@ public class DinersMapFragment extends Fragment implements GoogleMap.OnMarkerCli
         mRouteFinder = new ShortestRouteFinder(mMap);
         List<Diner> diners = Parcels.unwrap(getArguments().getParcelable("diners"));
         ShowMarkers task = new ShowMarkers();
+        mMap.setInfoWindowAdapter(new DinerInfoWindowAdapter(getActivity(), diners));
         task.execute(diners);
 
         return v;
@@ -116,7 +120,7 @@ public class DinersMapFragment extends Fragment implements GoogleMap.OnMarkerCli
                 me.earlwlkr.cityhotspots.models.Address addr = diner.getAddress();
                 String address = addr.getStreetAddress() + " " + addr.getDistrict()
                         + " " + addr.getCity();
-                LatLng pos = getLocationFromAddress(address);
+                LatLng pos = Utils.getLocationFromAddress(getActivity(), address);
                 if (pos != null) {
                     diner.setPosition(pos);
                     positions.add(pos);
@@ -125,7 +129,7 @@ public class DinersMapFragment extends Fragment implements GoogleMap.OnMarkerCli
                     // Handle Google API rate limit
                     SystemClock.sleep(20);
                     address = addr.getStreetAddress() + " " + addr.getDistrict();
-                    pos = getLocationFromAddress(address);
+                    pos = Utils.getLocationFromAddress(getActivity(), address);
                     if (pos != null) {
                         diner.setPosition(pos);
                         positions.add(pos);
@@ -144,7 +148,7 @@ public class DinersMapFragment extends Fragment implements GoogleMap.OnMarkerCli
             for (Diner diner: diners) {
                 LatLng pos = diner.getPosition();
                 if (pos != null) {
-                    mMap.addMarker(new MarkerOptions().position(pos).title(diner.getName()).snippet(diner.getCuisine()));
+                    mMap.addMarker(new MarkerOptions().position(pos).title(diner.getName()));
                 }
             }
         }
@@ -157,21 +161,6 @@ public class DinersMapFragment extends Fragment implements GoogleMap.OnMarkerCli
                     marker.getPosition());
         }
         return false;
-    }
-
-    public LatLng getLocationFromAddress(String strAddress) {
-        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-        try {
-            List<Address> address = geocoder.getFromLocationName(strAddress, 1);
-
-            if (address.size() > 0) {
-                Address location = address.get(0);
-                return new LatLng(location.getLatitude(), location.getLongitude());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     @Override

@@ -32,6 +32,7 @@ import java.util.Locale;
 import me.earlwlkr.cityhotspots.R;
 import me.earlwlkr.cityhotspots.models.Place;
 import me.earlwlkr.cityhotspots.service.ShortestRouteFinder;
+import me.earlwlkr.cityhotspots.utils.Utils;
 
 /**
  * Show list of places on map for user to pick.
@@ -116,7 +117,7 @@ public class MallsMapFragment extends Fragment implements GoogleMap.OnMarkerClic
                 me.earlwlkr.cityhotspots.models.Address addr = mall.getAddress();
                 String address = addr.getStreetAddress() + " " + addr.getDistrict()
                         + " " + addr.getCity();
-                LatLng pos = getLocationFromAddress(address);
+                LatLng pos = Utils.getLocationFromAddress(getActivity(), address);
                 if (pos != null) {
                     mall.setPosition(pos);
                     positions.add(pos);
@@ -125,7 +126,7 @@ public class MallsMapFragment extends Fragment implements GoogleMap.OnMarkerClic
                     // Handle Google API rate limit
                     SystemClock.sleep(20);
                     address = addr.getStreetAddress() + " " + addr.getDistrict();
-                    pos = getLocationFromAddress(address);
+                    pos = Utils.getLocationFromAddress(getActivity(), address);
                     if (pos != null) {
                         mall.setPosition(pos);
                         positions.add(pos);
@@ -144,7 +145,8 @@ public class MallsMapFragment extends Fragment implements GoogleMap.OnMarkerClic
             for (Place mall: malls) {
                 LatLng pos = mall.getPosition();
                 if (pos != null) {
-                    mMap.addMarker(new MarkerOptions().position(pos).title(mall.getName()));
+                    mMap.addMarker(new MarkerOptions().position(pos).title(mall.getName())
+                            .snippet(mall.getAddress().getAddressString()));
                 }
             }
         }
@@ -157,21 +159,6 @@ public class MallsMapFragment extends Fragment implements GoogleMap.OnMarkerClic
                     marker.getPosition());
         }
         return false;
-    }
-
-    public LatLng getLocationFromAddress(String strAddress) {
-        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-        try {
-            List<Address> address = geocoder.getFromLocationName(strAddress, 1);
-
-            if (address.size() > 0) {
-                Address location = address.get(0);
-                return new LatLng(location.getLatitude(), location.getLongitude());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     @Override

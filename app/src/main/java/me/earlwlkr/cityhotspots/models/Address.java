@@ -46,4 +46,8 @@ public class Address {
     public String getCity() {
         return city;
     }
+
+    public String getAddressString() {
+        return streetAddress + ", " + district + ", " + city;
+    }
 }

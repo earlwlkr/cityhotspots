@@ -31,8 +31,8 @@ import java.util.Locale;
 
 import me.earlwlkr.cityhotspots.R;
 import me.earlwlkr.cityhotspots.models.Cinema;
-import me.earlwlkr.cityhotspots.models.Diner;
 import me.earlwlkr.cityhotspots.service.ShortestRouteFinder;
+import me.earlwlkr.cityhotspots.utils.Utils;
 
 /**
  * Show list of places on map for user to pick.
@@ -117,7 +117,7 @@ public class CinemasMapFragment extends Fragment implements GoogleMap.OnMarkerCl
                 me.earlwlkr.cityhotspots.models.Address addr = cinema.getAddress();
                 String address = addr.getStreetAddress() + " " + addr.getDistrict()
                         + " " + addr.getCity();
-                LatLng pos = getLocationFromAddress(address);
+                LatLng pos = Utils.getLocationFromAddress(getActivity(), address);
                 if (pos != null) {
                     cinema.setPosition(pos);
                     positions.add(pos);
@@ -126,7 +126,7 @@ public class CinemasMapFragment extends Fragment implements GoogleMap.OnMarkerCl
                     // Handle Google API rate limit
                     SystemClock.sleep(20);
                     address = addr.getStreetAddress() + " " + addr.getDistrict();
-                    pos = getLocationFromAddress(address);
+                    pos = Utils.getLocationFromAddress(getActivity(), address);
                     if (pos != null) {
                         cinema.setPosition(pos);
                         positions.add(pos);
@@ -145,7 +145,8 @@ public class CinemasMapFragment extends Fragment implements GoogleMap.OnMarkerCl
             for (Cinema cinema: cinemas) {
                 LatLng pos = cinema.getPosition();
                 if (pos != null) {
-                    mMap.addMarker(new MarkerOptions().position(pos).title(cinema.getName()));
+                    mMap.addMarker(new MarkerOptions().position(pos)
+                            .title(cinema.getName()).snippet(cinema.getAddress().getAddressString()));
                 }
             }
         }
@@ -158,21 +159,6 @@ public class CinemasMapFragment extends Fragment implements GoogleMap.OnMarkerCl
                     marker.getPosition());
         }
         return false;
-    }
-
-    public LatLng getLocationFromAddress(String strAddress) {
-        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-        try {
-            List<Address> address = geocoder.getFromLocationName(strAddress, 1);
-
-            if (address.size() > 0) {
-                Address location = address.get(0);
-                return new LatLng(location.getLatitude(), location.getLongitude());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     @Override
