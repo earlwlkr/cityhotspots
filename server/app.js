@@ -6,6 +6,31 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
 db.once('open', function (callback) {
+  // GET: /malls
+  app.get('/malls', function(req, res) {
+    var docs = [
+      {
+        name: 'Sài Gòn Square',
+        address: {
+          city: 'TP.HCM',
+          country: 'Vietnam',
+          district: 'Quận 1',
+          street_address: '7 Tôn Đức Thắng'
+        }
+      },
+      {
+        name: 'Diamond Plaza',
+        address: {
+          city: 'TP.HCM',
+          country: 'Vietnam',
+          district: 'Quận 1',
+          street_address: '34 Lê Duẩn'
+        }
+      }
+    ];
+    res.json(docs);
+  });
+
   // GET: /cinemaoptions
   app.get('/cinemaoptions', function(req, res) {
     var collection = db.collection('cinemas');
