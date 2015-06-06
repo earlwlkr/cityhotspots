@@ -101,53 +101,50 @@ public class CinemasMapFragment extends Fragment implements GoogleMap.OnMarkerCl
         }
         mRouteFinder = new ShortestRouteFinder(mMap);
         List<Cinema> cinemas = Parcels.unwrap(getArguments().getParcelable("cinemas"));
-        ShowMarkers task = new ShowMarkers();
-        task.execute(cinemas);
-
+        for (Cinema cinema: cinemas) {
+            ShowMarkers task = new ShowMarkers();
+            task.execute(cinema);
+        }
         return v;
     }
 
-    private class ShowMarkers extends AsyncTask<List<Cinema>, Void, List<Cinema>> {
+    private class ShowMarkers extends AsyncTask<Cinema, Void, Cinema> {
         @Override
-        protected List<Cinema> doInBackground(List<Cinema>... cinemas) {
+        protected Cinema doInBackground(Cinema... cinemas) {
             int count = 0;
             ArrayList<LatLng> positions = new ArrayList<LatLng>();
-            for (Cinema cinema: cinemas[0])
-            {
-                me.earlwlkr.cityhotspots.models.Address addr = cinema.getAddress();
-                String address = addr.getStreetAddress() + " " + addr.getDistrict()
-                        + " " + addr.getCity();
-                LatLng pos = Utils.getLocationFromAddress(getActivity(), address);
+            Cinema cinema = cinemas[0];
+            me.earlwlkr.cityhotspots.models.Address addr = cinema.getAddress();
+            String address = addr.getStreetAddress() + " " + addr.getDistrict()
+                    + " " + addr.getCity();
+            LatLng pos = Utils.getLocationFromAddress(getActivity(), address);
+            if (pos != null) {
+                cinema.setPosition(pos);
+                positions.add(pos);
+                SystemClock.sleep(20);
+            } else {
+                // Handle Google API rate limit
+                SystemClock.sleep(20);
+                address = addr.getStreetAddress() + " " + addr.getDistrict();
+                pos = Utils.getLocationFromAddress(getActivity(), address);
                 if (pos != null) {
                     cinema.setPosition(pos);
                     positions.add(pos);
-                    SystemClock.sleep(20);
                 } else {
-                    // Handle Google API rate limit
-                    SystemClock.sleep(20);
-                    address = addr.getStreetAddress() + " " + addr.getDistrict();
-                    pos = Utils.getLocationFromAddress(getActivity(), address);
-                    if (pos != null) {
-                        cinema.setPosition(pos);
-                        positions.add(pos);
-                    } else {
-                        System.out.println(address);
-                        System.out.println(++count);
-                    }
+                    System.out.println(address);
+                    System.out.println(++count);
                 }
             }
-            return cinemas[0];
+            return cinema;
         }
 
         @Override
-        protected void onPostExecute(List<Cinema> cinemas) {
-            super.onPostExecute(cinemas);
-            for (Cinema cinema: cinemas) {
-                LatLng pos = cinema.getPosition();
-                if (pos != null) {
-                    mMap.addMarker(new MarkerOptions().position(pos)
-                            .title(cinema.getName()).snippet(cinema.getAddress().getAddressString()));
-                }
+        protected void onPostExecute(Cinema cinema) {
+            super.onPostExecute(cinema);
+            LatLng pos = cinema.getPosition();
+            if (pos != null) {
+                mMap.addMarker(new MarkerOptions().position(pos)
+                        .title(cinema.getName()).snippet(cinema.getAddress().getAddressString()));
             }
         }
     }

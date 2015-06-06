@@ -103,53 +103,52 @@ public class DinersMapFragment extends Fragment implements GoogleMap.OnMarkerCli
         }
         mRouteFinder = new ShortestRouteFinder(mMap);
         List<Diner> diners = Parcels.unwrap(getArguments().getParcelable("diners"));
-        ShowMarkers task = new ShowMarkers();
         mMap.setInfoWindowAdapter(new DinerInfoWindowAdapter(getActivity(), diners));
-        task.execute(diners);
+        for (Diner diner: diners) {
+            ShowMarkers task = new ShowMarkers();
+            task.execute(diner);
+        }
+
 
         return v;
     }
 
-    private class ShowMarkers extends AsyncTask<List<Diner>, Void, List<Diner>> {
+    private class ShowMarkers extends AsyncTask<Diner, Void, Diner> {
         @Override
-        protected List<Diner> doInBackground(List<Diner>... diners) {
+        protected Diner doInBackground(Diner... diners) {
             int count = 0;
             ArrayList<LatLng> positions = new ArrayList<LatLng>();
-            for (Diner diner: diners[0])
-            {
-                me.earlwlkr.cityhotspots.models.Address addr = diner.getAddress();
-                String address = addr.getStreetAddress() + " " + addr.getDistrict()
-                        + " " + addr.getCity();
-                LatLng pos = Utils.getLocationFromAddress(getActivity(), address);
+            Diner diner = diners[0];
+            me.earlwlkr.cityhotspots.models.Address addr = diner.getAddress();
+            String address = addr.getStreetAddress() + " " + addr.getDistrict()
+                    + " " + addr.getCity();
+            LatLng pos = Utils.getLocationFromAddress(getActivity(), address);
+            if (pos != null) {
+                diner.setPosition(pos);
+                positions.add(pos);
+                SystemClock.sleep(20);
+            } else {
+                // Handle Google API rate limit
+                SystemClock.sleep(20);
+                address = addr.getStreetAddress() + " " + addr.getDistrict();
+                pos = Utils.getLocationFromAddress(getActivity(), address);
                 if (pos != null) {
                     diner.setPosition(pos);
                     positions.add(pos);
-                    SystemClock.sleep(20);
                 } else {
-                    // Handle Google API rate limit
-                    SystemClock.sleep(20);
-                    address = addr.getStreetAddress() + " " + addr.getDistrict();
-                    pos = Utils.getLocationFromAddress(getActivity(), address);
-                    if (pos != null) {
-                        diner.setPosition(pos);
-                        positions.add(pos);
-                    } else {
-                        System.out.println(address);
-                        System.out.println(++count);
-                    }
+                    System.out.println(address);
+                    System.out.println(++count);
                 }
             }
-            return diners[0];
+            return diner;
         }
 
         @Override
-        protected void onPostExecute(List<Diner> diners) {
-            super.onPostExecute(diners);
-            for (Diner diner: diners) {
-                LatLng pos = diner.getPosition();
-                if (pos != null) {
-                    mMap.addMarker(new MarkerOptions().position(pos).title(diner.getName()));
-                }
+        protected void onPostExecute(Diner diner) {
+            super.onPostExecute(diner);
+            LatLng pos = diner.getPosition();
+            if (pos != null) {
+                mMap.addMarker(new MarkerOptions().position(pos).title(diner.getName()));
             }
         }
     }

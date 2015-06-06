@@ -101,53 +101,50 @@ public class MallsMapFragment extends Fragment implements GoogleMap.OnMarkerClic
         }
         mRouteFinder = new ShortestRouteFinder(mMap);
         List<Place> malls = Parcels.unwrap(getArguments().getParcelable("malls"));
-        ShowMarkers task = new ShowMarkers();
-        task.execute(malls);
-
+        for (Place mall: malls) {
+            ShowMarkers task = new ShowMarkers();
+            task.execute(mall);
+        }
         return v;
     }
 
-    private class ShowMarkers extends AsyncTask<List<Place>, Void, List<Place>> {
+    private class ShowMarkers extends AsyncTask<Place, Void, Place> {
         @Override
-        protected List<Place> doInBackground(List<Place>... malls) {
+        protected Place doInBackground(Place... malls) {
             int count = 0;
             ArrayList<LatLng> positions = new ArrayList<LatLng>();
-            for (Place mall: malls[0])
-            {
-                me.earlwlkr.cityhotspots.models.Address addr = mall.getAddress();
-                String address = addr.getStreetAddress() + " " + addr.getDistrict()
-                        + " " + addr.getCity();
-                LatLng pos = Utils.getLocationFromAddress(getActivity(), address);
+            Place mall = malls[0];
+            me.earlwlkr.cityhotspots.models.Address addr = mall.getAddress();
+            String address = addr.getStreetAddress() + " " + addr.getDistrict()
+                    + " " + addr.getCity();
+            LatLng pos = Utils.getLocationFromAddress(getActivity(), address);
+            if (pos != null) {
+                mall.setPosition(pos);
+                positions.add(pos);
+                SystemClock.sleep(20);
+            } else {
+                // Handle Google API rate limit
+                SystemClock.sleep(20);
+                address = addr.getStreetAddress() + " " + addr.getDistrict();
+                pos = Utils.getLocationFromAddress(getActivity(), address);
                 if (pos != null) {
                     mall.setPosition(pos);
                     positions.add(pos);
-                    SystemClock.sleep(20);
                 } else {
-                    // Handle Google API rate limit
-                    SystemClock.sleep(20);
-                    address = addr.getStreetAddress() + " " + addr.getDistrict();
-                    pos = Utils.getLocationFromAddress(getActivity(), address);
-                    if (pos != null) {
-                        mall.setPosition(pos);
-                        positions.add(pos);
-                    } else {
-                        System.out.println(address);
-                        System.out.println(++count);
-                    }
+                    System.out.println(address);
+                    System.out.println(++count);
                 }
             }
-            return malls[0];
+            return mall;
         }
 
         @Override
-        protected void onPostExecute(List<Place> malls) {
-            super.onPostExecute(malls);
-            for (Place mall: malls) {
-                LatLng pos = mall.getPosition();
-                if (pos != null) {
-                    mMap.addMarker(new MarkerOptions().position(pos).title(mall.getName())
-                            .snippet(mall.getAddress().getAddressString()));
-                }
+        protected void onPostExecute(Place mall) {
+            super.onPostExecute(mall);
+            LatLng pos = mall.getPosition();
+            if (pos != null) {
+                mMap.addMarker(new MarkerOptions().position(pos).title(mall.getName())
+                        .snippet(mall.getAddress().getAddressString()));
             }
         }
     }
