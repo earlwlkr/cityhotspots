@@ -54,8 +54,8 @@ public class DinerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         for (Diner diner: mDiners) {
             LatLng dinerPos = diner.getPosition();
-            if (dinerPos != null && dinerPos.latitude - latLng.latitude < 0.00001 &&
-                    dinerPos.longitude - latLng.longitude < 0.00001) {
+            if (dinerPos != null && Math.abs(dinerPos.latitude - latLng.latitude) < 0.000001 &&
+                    Math.abs(dinerPos.longitude - latLng.longitude) < 0.000001) {
 
                 txtName.setText(diner.getName());
                 if (diner.getRating() != "--") {
