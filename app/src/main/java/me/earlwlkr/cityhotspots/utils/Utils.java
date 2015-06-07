@@ -119,27 +119,27 @@ public class Utils {
             jRoutes = jObject.getJSONArray("routes");
             /** Traversing all routes */
             for (int i = 0; i < jRoutes.length(); i++) {
-                jLegs = ((JSONObject) jRoutes.get(i)).getJSONArray("legs");
+                jLegs = jRoutes.getJSONObject(i).getJSONArray("legs");
                 List<HashMap<String, String>> path = new ArrayList<HashMap<String, String>>();
 
                 /** Traversing all legs */
                 for (int j = 0; j < jLegs.length(); j++) {
-                    jSteps = ((JSONObject) jLegs.get(j)).getJSONArray("steps");
+                    jSteps = jLegs.getJSONObject(j).getJSONArray("steps");
 
                     /** Traversing all steps */
                     for (int k = 0; k < jSteps.length(); k++) {
                         String polyline = "";
-                        polyline = (String) ((JSONObject) ((JSONObject) jSteps
-                                .get(k)).get("polyline")).get("points");
+                        polyline = jSteps.getJSONObject(k)
+                                .getJSONObject("polyline").getString("points");
                         List<LatLng> list = decodePoly(polyline);
 
                         /** Traversing all points */
                         for (int l = 0; l < list.size(); l++) {
                             HashMap<String, String> hm = new HashMap<String, String>();
                             hm.put("lat",
-                                    Double.toString(((LatLng) list.get(l)).latitude));
+                                    Double.toString(list.get(l).latitude));
                             hm.put("lng",
-                                    Double.toString(((LatLng) list.get(l)).longitude));
+                                    Double.toString(list.get(l).longitude));
                             path.add(hm);
                         }
                     }
