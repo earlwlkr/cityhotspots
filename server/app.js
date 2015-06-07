@@ -26,7 +26,62 @@ db.once('open', function (callback) {
           district: 'Quận 1',
           street_address: '34 Lê Duẩn'
         }
+      },
+      {
+        name: 'Hùng Vương Plaza',
+        address: {
+          city: 'TP.HCM',
+          country: 'Vietnam',
+          district: 'Quận 5',
+          street_address: '126 Hùng Vương'
+        }
+      },
+      {
+        name: ' Now Zone',
+        address: {
+          city: 'TP.HCM',
+          country: 'Vietnam',
+          district: 'Quận 1',
+          street_address: '235 Nguyễn Văn Cừ'
+        }
+      },
+      {
+        name: ' Zen Plaza',
+        address: {
+          city: 'TP.HCM',
+          country: 'Vietnam',
+          district: 'Quận 1',
+          street_address: '54 Nguyễn Trãi'
+        }
+      },
+      {
+        name: ' MCM',
+        address: {
+          city: 'TP.HCM',
+          country: 'Việt Nam',
+          district: 'Quận Tân Bình',
+          street_address: '79B Lý Thường Kiệt'
+        }
+      },
+	  	{
+        name: 'Tecasin',
+        address: {
+          city: 'TP.HCM',
+          country: 'Việt Nam',
+          district: 'Quận Tân Bình',
+          street_address: '243 Hoàng Văn Thụ'
+        }
+      },
+      {
+        name: 'Trung Tâm Thương Mại Q. 10',
+        address: {
+          city: 'TP.HCM',
+          country: 'Việt Nam',
+          district: 'Q. 10',
+          street_address: '256 Lý Thường Kiệt'
+        }
       }
+	  
     ];
     res.json(docs);
   });
